@@ -2,7 +2,7 @@
 
 export function Logo() {
   return (
-    <h1 className="text-3xl font-bold underline">
+    <h1 >
       🏝️Far Away🎒
     </h1>
   )
