@@ -1,7 +1,13 @@
+interface ListItemProps {
+    number: number;
+    item: string;
+}
 
-
-export function ListItem(){
+export function ListItem({number, item}: ListItemProps) {
     return(
-        <li><span>{1}</span> <span> Item</span></li>
+        <li>
+            <span>{number}</span> 
+            <span> {item}</span>
+        </li>
     )
 }
