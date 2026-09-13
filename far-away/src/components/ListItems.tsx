@@ -8,6 +8,7 @@ export function ListItem({number, item}: ListItemProps) {
         <li>
             <span>{number}</span> 
             <span> {item}</span>
+            <button>❌</button>
         </li>
     )
 }
