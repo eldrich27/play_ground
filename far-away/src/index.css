@@ -82,24 +82,32 @@ input {
 .quantity-input {
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   background-color: #ffebb3;
   border-radius: 10rem;
   padding: 0.4rem;
 }
 
 .quantity-input button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.8rem;
+  height: 2.8rem;
+  padding: 0;
+  border-radius: 10rem;
   background-color: #76c7ad;
   color: #fff;
-  border-radius: 10rem;
-  /* border: none;              */
-  /* padding: 12px 24px;       Top/Bottom Left/Right spacing */
+  font-size: 2rem;
+  line-height: 1;
   cursor: pointer;
-  padding: 0.6rem 1.4rem;
 }
 
 .quantity-input input {
-  width: 4rem;
-  padding: 0.6rem 0;
+  width: 3.2rem;
+  padding: 0.4rem 0;
   border-radius: 0;
   background-color: transparent;
   text-align: center;
