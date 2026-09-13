@@ -1,9 +1,9 @@
 import {ListItem} from './ListItems';
 import type {ComponentProps} from 'react';
 
-type ListItemProps = ComponentProps<typeof ListItem>;
+type ListProps = ComponentProps<typeof ListItem>;
 
-export function List({items = []}: {items?: ListItemProps['item'][]}) {
+export function List({items = []}: {items?: ListProps['item'][]}) {
     return (
         <div className="list">
             <ul>
