@@ -1,5 +1,6 @@
 
 import { useState } from "react"
+import type {Items} from '../types'
 
 export function Form() {
   const [quantity, setQuantity] = useState(1);
@@ -22,7 +23,7 @@ export function Form() {
     if (!item.trim()) return
 
     // Create an array of items with the quantity and item name
-    const items = { item, quantity, packed: false, id: Date.now() };
+    const items: Items = { item, quantity, packed: false, id: Date.now() };
     console.log(items)
 
     // Reset the form
