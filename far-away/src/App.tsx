@@ -17,6 +17,11 @@ function App() {
     setItems((items) => [...items, newItem])
   }
 
+  // function to remove items from the list
+  const removeItem = (id: number) => {
+    setItems((items) => items.filter((item) => item.id !== id))
+  }
+
 
   return (
   <div className="app">
