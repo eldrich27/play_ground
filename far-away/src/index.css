@@ -72,6 +72,8 @@ input {
   cursor: pointer;
 }
 
+
+
 .add-form button {
   text-transform: uppercase;
   background-color: #76c7ad;
@@ -86,8 +88,12 @@ input {
 }
 
 .quantity-input button {
-  text-transform: none;
-  background-color: transparent;
+  background-color: #76c7ad;
+  color: #fff;
+  border-radius: 10rem;
+  /* border: none;              */
+  /* padding: 12px 24px;       Top/Bottom Left/Right spacing */
+  cursor: pointer;
   padding: 0.6rem 1.4rem;
 }
 
