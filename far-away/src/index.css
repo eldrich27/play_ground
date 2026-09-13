@@ -77,6 +77,36 @@ input {
   background-color: #76c7ad;
 }
 
+.quantity-input {
+  display: flex;
+  align-items: center;
+  background-color: #ffebb3;
+  border-radius: 10rem;
+  padding: 0.4rem;
+}
+
+.quantity-input button {
+  text-transform: none;
+  background-color: transparent;
+  padding: 0.6rem 1.4rem;
+}
+
+.quantity-input input {
+  width: 4rem;
+  padding: 0.6rem 0;
+  border-radius: 0;
+  background-color: transparent;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.quantity-input input::-webkit-outer-spin-button,
+.quantity-input input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
 .list {
   background-color: #5a3e2b;
   color: #ffebb3;
