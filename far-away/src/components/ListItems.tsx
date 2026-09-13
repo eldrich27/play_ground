@@ -1,14 +1,16 @@
+import type {Items} from '../types';
+
 interface ListItemProps {
-    number: number;
-    item: string;
+    item: Items;
+    onRemoveItem: (id: number) => void;
 }
 
-export function ListItem({number, item}: ListItemProps) {
+export function ListItem({item, onRemoveItem}: ListItemProps) {
     return(
         <li>
-            <span>{number}</span> 
-            <span> {item}</span>
-            <button>❌</button>
+            <span>{item.quantity}</span> 
+            <span> {item.item}</span>
+            <button onClick={() => onRemoveItem(item.id)}>❌</button>
         </li>
     )
 }

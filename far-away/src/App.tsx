@@ -27,7 +27,7 @@ function App() {
   <div className="app">
     <Logo />
     <Form onAddItem={addItem} />
-    <List items={items} />
+    <List items={items} onRemoveItem={removeItem} />
     <Stats />
   </div>
   )
