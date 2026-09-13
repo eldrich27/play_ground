@@ -10,15 +10,24 @@ export function Form() {
   }
 
 
-  function handleInputChange(e) {
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setItem(e.target.value)
   }
 
   //   handle form submit
-  function handleSubmit(e) {
+  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(item)
-    console.log({item: e.target.item.value, quantity: e.target.quantity.value})
+
+    // return if the form is submited without an item
+    if (!item.trim()) return
+
+    // Create an array of items with the quantity and item name
+    const items = { item, quantity, packed: false, id: Date.now() };
+    console.log(items)
+
+    // Reset the form
+    setItem('')
+    setQuantity(1)
   }
 
   return (
