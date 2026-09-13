@@ -2,7 +2,7 @@
 import { useState } from "react"
 import type {Items} from '../types'
 
-export function Form() {
+export function Form({onAddItem}: {onAddItem: (newItem: Items) => void}) {
   const [quantity, setQuantity] = useState(1);
   const [item, setItem] = useState('');
 
@@ -23,8 +23,9 @@ export function Form() {
     if (!item.trim()) return
 
     // Create an array of items with the quantity and item name
-    const items: Items = { item, quantity, packed: false, id: Date.now() };
-    console.log(items)
+    const newItems: Items = { item, quantity, packed: false, id: Date.now() };
+    // console.log(newItems)
+    onAddItem(newItems)
 
     // Reset the form
     setItem('')

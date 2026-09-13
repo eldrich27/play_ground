@@ -1,19 +1,28 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 
 import {Logo} from './components/Logo';
 import {Form} from './components/Form';
 import {List} from './components/List';
 import {Stats} from './components/Stats';
+import type {Items} from './types'
 
 import './App.css'
 import './index.css'
 
 function App() {
- return (
+  const [items, setItems] = useState<Items[]>([])
+
+  // function to add new items to the list
+  const addItem = (newItem: Items) => {
+    setItems((items) => [...items, newItem])
+  }
+
+
+  return (
   <div className="app">
     <Logo />
-    <Form />
-    <List />
+    <Form onAddItem={addItem} />
+    <List items={items} />
     <Stats />
   </div>
   )
