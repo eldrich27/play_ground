@@ -22,6 +22,14 @@ function App() {
     setItems((items) => items.filter((item) => item.id !== id))
   }
 
+  // function to update the packed status of an item
+  const togglePacked = (id: number) => {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
+    )
+  }
 
   return (
   <div className="app">
