@@ -1,11 +1,18 @@
 import {useState} from 'react';
+import type {Dispatch, SetStateAction} from 'react';
 import {ListItem} from './ListItems';
 // import type {ComponentProps} from 'react';
 import type {Items} from '../types'
 
 
 
-export function List({items = [], onRemoveItem, onTogglePacked}: {items?: Items[]; onRemoveItem: (id: number) => void; onTogglePacked: (id: number) => void}) {
+export function List({items = [], onRemoveItem, onTogglePacked, setItems}: 
+    {
+        items?: Items[]; 
+        onRemoveItem: (id: number) => void; 
+        onTogglePacked: (id: number) => void; 
+        setItems: Dispatch<SetStateAction<Items[]>>
+    }) {
     
     // use state to manage the sorting and filtering options
     const [sortOption, setSortOption] = useState('input');
@@ -34,6 +41,12 @@ export function List({items = [], onRemoveItem, onTogglePacked}: {items?: Items[
     } else if (filterOption === 'unpacked'){
         sortedItems = [...items].filter(a => !a.packed)
     }
+
+    // function to clear the list
+    function handleClear() {
+        // items.forEach((item) => onRemoveItem(item.id));
+        setItems([])
+    }
    
     
     return (
@@ -43,18 +56,20 @@ export function List({items = [], onRemoveItem, onTogglePacked}: {items?: Items[
                     <ListItem key={item.id} item={item} onRemoveItem={onRemoveItem} onTogglePacked={onTogglePacked} />
                 ))}
             </ul>
-            <div className="actions" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
-                <select className="select">
-                    <option value="input">Sort by Input Order</option>
-                    <option value="Item">Sort by Item Name</option>
-                    <option value="packed">Sort by Packed Status</option>
+            <div className="actions">
+                <label htmlFor='sort'>Sort :</label>
+                <select id='sort' className="select" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+                    <option value="input">Input Order</option>
+                    <option value="Item">Item Name</option>
+                    <option value="packed">Packed Status</option>
                 </select>
-                <select className="select" value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
+                <label htmlFor="filter">Filter: </label>
+                <select id='filter' className="select" value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
                     <option value="all">All</option>
                     <option value="packed">Packed</option>
                     <option value="unpacked">Unpacked</option>
                 </select>
-                <button>Clear</button>
+                <button onClick={handleClear}>Clear</button>
             </div>
         </div>
     )
