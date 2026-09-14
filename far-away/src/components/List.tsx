@@ -13,10 +13,10 @@ export function List({items = [], onRemoveItem, onTogglePacked}: {items?: Items[
 
     
     // Sort the items based on the selected sort option
-    let sortedItems:Items[] = [];
+    let sortedItems: Items[] = items;
 
     if (sortOption === 'input') {
-        sortedItems = items;
+        sortedItems;
 
     } else if (sortOption === 'Item') {
         // sort by item name
@@ -24,6 +24,15 @@ export function List({items = [], onRemoveItem, onTogglePacked}: {items?: Items[
     } else if (sortOption === 'packed') {
         // sort by packed status
         sortedItems = [...items].sort((a, b) => Number(!a.packed) - Number(!b.packed));
+    }
+
+    // Filter Items based on packed and unpacked status
+    if (filterOption === 'all'){
+        sortOption
+    } else if (filterOption === 'packed'){
+        sortedItems = [...items].filter(a => a.packed)
+    } else if (filterOption === 'unpacked'){
+        sortedItems = [...items].filter(a => !a.packed)
     }
    
     
@@ -45,6 +54,7 @@ export function List({items = [], onRemoveItem, onTogglePacked}: {items?: Items[
                     <option value="packed">Packed</option>
                     <option value="unpacked">Unpacked</option>
                 </select>
+                <button>Clear</button>
             </div>
         </div>
     )
