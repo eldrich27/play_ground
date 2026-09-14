@@ -44,8 +44,9 @@ export function List({items = [], onRemoveItem, onTogglePacked, setItems}:
 
     // function to clear the list
     function handleClear() {
+        const confirm = window.confirm("Are you sure you want to clear everything?")
         // items.forEach((item) => onRemoveItem(item.id));
-        setItems([])
+        confirm && setItems([])
     }
    
     
