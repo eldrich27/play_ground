@@ -9,6 +9,10 @@ export function List({items = [], onRemoveItem, onTogglePacked}: {items?: Items[
     
     // use state to manage the sorting and filtering options
     const [sortOption, setSortOption] = useState('input');
+    const [filterOption, setFilterOption] = useState('all');
+
+    
+    // Sort the items based on the selected sort option
     let sortedItems:Items[] = [];
 
     if (sortOption === 'input') {
@@ -36,7 +40,7 @@ export function List({items = [], onRemoveItem, onTogglePacked}: {items?: Items[
                     <option value="Item">Sort by Item Name</option>
                     <option value="packed">Sort by Packed Status</option>
                 </select>
-                <select className="select">
+                <select className="select" value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
                     <option value="all">All</option>
                     <option value="packed">Packed</option>
                     <option value="unpacked">Unpacked</option>
