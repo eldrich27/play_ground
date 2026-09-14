@@ -57,18 +57,28 @@ export function List({items = [], onRemoveItem, onTogglePacked, setItems}:
                 ))}
             </ul>
             <div className="actions">
-                <label htmlFor='sort'>Sort:</label>
-                <select id='sort' className="select" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
-                    <option value="input">Input Order</option>
-                    <option value="Item">Item Name</option>
-                    <option value="packed">Packed Status</option>
-                </select>
-                <label htmlFor="filter">Filter:</label>
-                <select id='filter' className="select" value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
-                    <option value="all">All</option>
-                    <option value="packed">Packed</option>
-                    <option value="unpacked">Unpacked</option>
-                </select>
+                <div className="action-group">
+                    <label htmlFor='sort'>Sort:</label>
+                    <div className="select-wrapper">
+                        <span className="select-icon" aria-hidden="true">⇅</span>
+                        <select id='sort' className="select" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+                            <option value="input">Input Order</option>
+                            <option value="Item">Item Name</option>
+                            <option value="packed">Packed Status</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="action-group">
+                    <label htmlFor="filter">Filter:</label>
+                    <div className="select-wrapper">
+                        <span className="select-icon" aria-hidden="true">⏷</span>
+                        <select id='filter' className="select" value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
+                            <option value="all">All</option>
+                            <option value="packed">Packed</option>
+                            <option value="unpacked">Unpacked</option>
+                        </select>
+                    </div>
+                </div>
                 <button onClick={handleClear}>Clear</button>
             </div>
         </div>
