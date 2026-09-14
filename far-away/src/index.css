@@ -133,13 +133,55 @@ input {
   align-items: center;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.action-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.actions label {
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #ffebb3;
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.select-icon {
+  position: absolute;
+  left: 1.4rem;
+  font-size: 1.4rem;
+  pointer-events: none;
+  color: #5a3e2b;
+  font-weight: 700;
+}
+
 .actions button,
 .list select {
   text-transform: uppercase;
-  padding: 0.8rem 2.4rem;
+  padding: 0.8rem 2rem;
   font-size: 1.4rem;
   font-weight: 700;
-  margin: 0 0.8rem;
+  min-width: 10rem;
+  text-align: center;
+}
+
+.select-wrapper select {
+  padding-left: 2.8rem;
 }
 
 .list ul {

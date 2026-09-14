@@ -35,7 +35,7 @@ function App() {
   <div className="app">
     <Logo />
     <Form onAddItem={addItem} />
-    <List items={items} onRemoveItem={removeItem} onTogglePacked={togglePacked} />
+    <List items={items} onRemoveItem={removeItem} onTogglePacked={togglePacked} setItems ={setItems}/>
     <Stats items = {items}/>
   </div>
   )
