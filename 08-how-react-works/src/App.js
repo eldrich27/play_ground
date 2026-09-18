@@ -72,6 +72,19 @@ function TabContent({ item }) {
     console.log(likes)
   }
 
+  function handleTripleLikes(){
+    // this code is to show how we must always use callback function in state
+    // if we just setlikes directly it will update just once as the code runs asynchronisly
+    // all the likes witll have a value of initial state incremented by 1
+    setLikes(likes => likes + 1);
+    setLikes(likes => likes + 1);
+    setLikes(likes => likes + 1);
+  }
+
+  function handleUndoLater(){
+    setTimeout(handleUndo,2000)
+  }
+
   return (
   
     <div className="tab-content">
@@ -87,13 +100,13 @@ function TabContent({ item }) {
         <div className="hearts-counter">
           <span>{likes} ❤️</span>
           <button onClick={handleInc}>+</button>
-          <button>+++</button>
+          <button onClick={handleTripleLikes}>+++</button>
         </div>
       </div>
 
       <div className="tab-undo">
         <button onClick={handleUndo}>Undo</button>
-        <button>Undo in 2s</button>
+        <button onClick={handleUndoLater}>Undo in 2s</button>
       </div>
     </div>
   );
