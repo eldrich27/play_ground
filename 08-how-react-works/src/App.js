@@ -73,7 +73,9 @@ function TabContent({ item }) {
   }
 
   return (
+  
     <div className="tab-content">
+      {console.log("RENDER")}
       <h4>{item.summary}</h4>
       {showDetails && <p>{item.details}</p>}
 
@@ -90,7 +92,7 @@ function TabContent({ item }) {
       </div>
 
       <div className="tab-undo">
-        <button>Undo</button>
+        <button onClick={handleUndo}>Undo</button>
         <button>Undo in 2s</button>
       </div>
     </div>
