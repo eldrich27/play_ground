@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/eldrich27/play_ground/static/css/main.c3b3c9ba.css",
+    "main.js": "/eldrich27/play_ground/static/js/main.7f896ed7.js",
+    "index.html": "/eldrich27/play_ground/index.html",
+    "main.c3b3c9ba.css.map": "/eldrich27/play_ground/static/css/main.c3b3c9ba.css.map",
+    "main.7f896ed7.js.map": "/eldrich27/play_ground/static/js/main.7f896ed7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c3b3c9ba.css",
+    "static/js/main.7f896ed7.js"
+  ]
+}
