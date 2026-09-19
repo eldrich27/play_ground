@@ -39,7 +39,7 @@ function Tabbed({ content }) {
       </div>
 
       {activeTab <= 2 ? (
-        <TabContent item={content.at(activeTab)} />
+        <TabContent item={content.at(activeTab)} key={content.at(activeTab).summary} />
       ) : (
         <DifferentContent />
       )}
@@ -66,8 +66,29 @@ function TabContent({ item }) {
     setLikes(likes + 1);
   }
 
+  function handleUndo(){
+    setShowDetails(true);
+    setLikes(0)
+    console.log(likes)
+  }
+
+  function handleTripleLikes(){
+    // this code is to show how we must always use callback function in state
+    // if we just setlikes directly it will update just once as the code runs asynchronisly
+    // all the likes witll have a value of initial state incremented by 1
+    setLikes(likes => likes + 1);
+    setLikes(likes => likes + 1);
+    setLikes(likes => likes + 1);
+  }
+
+  function handleUndoLater(){
+    setTimeout(handleUndo,2000)
+  }
+
   return (
+  
     <div className="tab-content">
+      {console.log("RENDER")}
       <h4>{item.summary}</h4>
       {showDetails && <p>{item.details}</p>}
 
@@ -79,13 +100,13 @@ function TabContent({ item }) {
         <div className="hearts-counter">
           <span>{likes} ❤️</span>
           <button onClick={handleInc}>+</button>
-          <button>+++</button>
+          <button onClick={handleTripleLikes}>+++</button>
         </div>
       </div>
 
       <div className="tab-undo">
-        <button>Undo</button>
-        <button>Undo in 2s</button>
+        <button onClick={handleUndo}>Undo</button>
+        <button onClick={handleUndoLater}>Undo in 2s</button>
       </div>
     </div>
   );
