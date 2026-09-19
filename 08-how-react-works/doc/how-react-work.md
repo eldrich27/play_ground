@@ -40,7 +40,7 @@ function Welcome({ name }) {
 }
 ```
 
-With the modern JSX transform, the compiler usually imports `jsx` from `react/jsx-runtime` instead of requiring `React.createElement` in every file. Either way, the result is a React element: a plain, immutable description containing information such as:
+With the modern JSX transform, the compiler usually imports `jsx` from `react/jsx-runtime` instead of requiring `React.createElement` in every file. Either way, the result is a React element: a plain, immutable description containing information such as (shown here for a call like `<Welcome name="Ada" />`):
 
 ```js
 {
@@ -117,8 +117,8 @@ A **Fiber** is an internal JavaScript object representing one unit in the render
 - `child`: the first child Fiber.
 - `sibling`: the next sibling Fiber.
 - `stateNode`: the component instance or host DOM node when applicable.
-- flags: work that must be performed during commit, such as placement or update.
-- an alternate: the corresponding Fiber from the other tree version.
+- `flags`: work that must be performed during commit, such as placement or update.
+- `alternate`: the corresponding Fiber from the other tree version.
 
 The child and sibling pointers make the tree navigable without requiring recursive JavaScript calls for the whole update. React can pause between units of work, continue later, and prioritize more urgent updates. This is the foundation of the Fiber architecture.
 
@@ -241,8 +241,8 @@ After the render phase completes, React has a finished work-in-progress tree and
 
 1. **Before-mutation work**: React prepares for mutations and runs relevant cleanup work.
 2. **Mutation work**: React inserts, removes, and updates host DOM nodes.
-3. **Layout effects**: `useLayoutEffect` callbacks run after DOM mutations but before the browser paints.
-4. React makes the committed tree current.
+3. React makes the committed tree current, right after mutation and before layout effects run.
+4. **Layout effects**: `useLayoutEffect` callbacks run after DOM mutations but before the browser paints.
 5. **Passive effects**: `useEffect` callbacks are scheduled after the commit, generally after the browser has had an opportunity to paint.
 
 For most application code, this means:

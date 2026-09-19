@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Docs
+
+- [How React Works Behind the Scenes](doc/how-react-work.md) — a guide to React 18's render pipeline, covering JSX-to-element compilation, Fiber, reconciliation/diffing, the render and commit phases, hooks/batching, and common misconceptions, illustrated with diagrams and examples from this project.
+
 ## Available Scripts
 
 In the project directory, you can run:
