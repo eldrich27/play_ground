@@ -99,7 +99,7 @@ component functions run
 new React elements
 			 |
 			 v
-reconcile against previous Fibers
+reconcile against previous Fibers  
 			 |
 			 v
 minimal host DOM mutations
