@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 function DateCounter() {
   const [count, setCount] = useState(0);
@@ -18,11 +18,11 @@ function DateCounter() {
     setCount((count) => count + step);
   };
 
-  const defineCount = function (e) {
+  const defineCount = function (e: ChangeEvent<HTMLInputElement>) {
     setCount(Number(e.target.value));
   };
 
-  const defineStep = function (e) {
+  const defineStep = function (e: ChangeEvent<HTMLInputElement>) {
     setStep(Number(e.target.value));
   };
 
