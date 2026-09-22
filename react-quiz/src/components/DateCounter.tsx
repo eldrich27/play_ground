@@ -1,6 +1,26 @@
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useReducer, useState } from "react";
+
+function reducer(state, action){
+  switch (action.type) {
+    case 'inc_num':{
+      return {
+        count: state.count + 1
+      }
+    }
+    case 'dec_num':{
+      return {
+        count: state.count - 1
+      }
+    }
+  }
+  throw Error("Unknown Action: " + action.type)
+}
+
+
+let initialState = {count:0, step:1}
 
 function DateCounter() {
+  const [state, dispatch] = useReducer(reducer, initialState)
   const [count, setCount] = useState(0);
   const [step, setStep] = useState(1);
 
@@ -45,9 +65,9 @@ function DateCounter() {
       </div>
 
       <div>
-        <button onClick={dec}>-</button>
-        <input value={count} onChange={defineCount} />
-        <button onClick={inc}>+</button>
+        <button onClick={() =>{dispatch({ type: 'dec_num' })}}>-</button>
+        <input value={state.count} onChange={defineCount} />
+        <button onClick={() =>{dispatch({ type: 'inc_num' })}}>+</button>
       </div>
 
       <p>{date.toDateString()}</p>
