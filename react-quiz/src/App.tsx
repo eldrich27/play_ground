@@ -6,6 +6,7 @@ import Header from "./components/Header"
 import Loader from "./components/Loader"
 import Progress from "./components/Progress"
 import StartScreen from "./components/StartQuiz"
+import Question from "./components/Questions"
 
 const initialState = {numQuestion:0, maxPoints:10}
 
@@ -22,7 +23,7 @@ function App() {
       <Header />
       <Main>
         <Progress />
-        <StartScreen />
+        <StartScreen dispatch = {dispatch}/>
       </Main>
 
     </div>
