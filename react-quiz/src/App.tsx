@@ -60,6 +60,14 @@ function reducer(state: State, action: Action): State {
 
       }
     }
+    case "nextQuestion":{
+    
+    return {
+      ...state,
+      index: state.index +1,
+      answer: null
+    }
+    }
     default:
       throw new Error("action not supported")
   }

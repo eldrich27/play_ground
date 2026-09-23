@@ -12,7 +12,7 @@ function Progress({numQuestions, points, index, maxPoints}:ProgressProps) {
 
   return (
     <div className="progress">
-      <progress max={numQuestions} value={1} />
+      <progress max={numQuestions} value={index} />
 
       <p>
         Question <strong>{index+1}</strong> / {numQuestions}
