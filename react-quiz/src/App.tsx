@@ -69,6 +69,13 @@ function reducer(state: State, action: Action): State {
         answer: null
       }
     }
+    case "finishTest":{
+    
+      return {
+        ...state,
+        status: "finished"
+      }
+    }
     default:
       throw new Error("action not supported")
   }
