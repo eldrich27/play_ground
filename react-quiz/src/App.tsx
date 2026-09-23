@@ -120,6 +120,7 @@ function App() {
           <Question
             question={questions[index]}
             answer = {answer}
+            index={index}
             dispatch={dispatch}
           />
         </>
