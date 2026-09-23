@@ -11,6 +11,7 @@ import ErrorMessage from "./components/Error"
 
 import type { Questions } from "./types/Questions"
 import type { Action } from "./types/Action"
+import { FinishScreen } from "./components/FinishScreen"
 
 type State = {
   questions: Questions[]
@@ -123,6 +124,7 @@ function App() {
           />
         </>
         }
+        {status === "finished" && <FinishScreen/>}
       </Main>
 
     </div>
