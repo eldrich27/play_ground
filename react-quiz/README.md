@@ -7,7 +7,7 @@ A small interactive quiz application built with React and TypeScript to practice
 ![React](https://img.shields.io/badge/React-19.2.8-61DAFB?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-~6.0.2-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8.3.0-646CFF?logo=vite&logoColor=white)
-![Node](https://img.shields.io/badge/Node-%40types%2Fnode-24.13.3-339933?logo=node.js&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-24.13.3-339933?logo=node.js&logoColor=white)
 ![Oxlint](https://img.shields.io/badge/Oxlint-1.81.0-8A2BE2?logo=eslint&logoColor=white)
 
 </div>
