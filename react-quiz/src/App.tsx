@@ -92,6 +92,12 @@ function App() {
     getQuestions("http://localhost:3031/questions")
   },[])
 
+
+  const maxPoints = questions?.reduce((acc,cur_val)=>{
+    return acc + cur_val?.points
+  },0)
+
+
   return (
     <div className="app">
       <Header />
@@ -101,7 +107,7 @@ function App() {
         {status === "error" && <ErrorMessage/>}
         {status === "active" &&
         <>
-          <Progress numQuestions={numQuestion} points={points}/>
+          <Progress numQuestions={numQuestion} points={points} index={index} maxPoints={maxPoints}/>
           <Question
             question={questions[index]}
             answer = {answer}

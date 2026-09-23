@@ -2,10 +2,12 @@
 
 interface ProgressProps{
   numQuestions: number,
-  points: number
+  points: number, 
+  index : number,
+  maxPoints : number
 }
 
-function Progress({numQuestions, points}:ProgressProps) {
+function Progress({numQuestions, points, index, maxPoints}:ProgressProps) {
 //   const { index, numQuestions, points, maxPossiblePoints, answer } = useQuiz();
 
   return (
@@ -13,11 +15,11 @@ function Progress({numQuestions, points}:ProgressProps) {
       <progress max={numQuestions} value={1} />
 
       <p>
-        Question <strong>{1}</strong> / {numQuestions}
+        Question <strong>{index+1}</strong> / {numQuestions}
       </p>
 
       <p>
-        <strong>{points}</strong> / {250}
+        <strong>{points}</strong> / {maxPoints}
       </p>
     </div>
   );
