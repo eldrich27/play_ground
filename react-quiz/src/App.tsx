@@ -19,6 +19,7 @@ type State = {
   index: number
   answer : number | null
   points : number
+  highscore : number
 }
 
 const initialState: State = {
@@ -26,7 +27,8 @@ const initialState: State = {
   status: "loading",
   index: 0,
   answer : null,
-  points:0
+  points:0,
+  highscore:0
 }
 
 function reducer(state: State, action: Action): State {
@@ -70,16 +72,18 @@ function reducer(state: State, action: Action): State {
       }
     }
     case "finishTest":{
-    
+
       return {
         ...state,
-        status: "finished"
+        status: "finished",
+        highscore: Math.max(state.points, state.highscore)
       }
     }
     case "reset":{
       return {
         ...initialState,
         questions: state.questions,
+        highscore: state.highscore,
         status: "ready"
       }
     }
@@ -90,7 +94,7 @@ function reducer(state: State, action: Action): State {
 
 function App() {
 
-  const [{status, questions, answer, index, points}, dispatch] = useReducer(reducer, initialState)
+  const [{status, questions, answer, index, points, highscore}, dispatch] = useReducer(reducer, initialState)
 
   const numQuestion = questions?.length
 
@@ -140,9 +144,10 @@ function App() {
         </>
         }
         {status === "finished" && 
-        <FinishScreen 
-          points={points} 
+        <FinishScreen
+          points={points}
           maxPoints={maxPoints}
+          highscore={highscore}
           dispatch={dispatch}
         />}
       </Main>
