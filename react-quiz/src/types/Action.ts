@@ -6,4 +6,4 @@ export type Action = { type: "dataReceived"; payload: Questions[]; } |
 { type: "error"; } |
 { type: "newAnswer"; payload: number; } |
 { type: "nextQuestion"} |
-{ type: "nextQuestion"} ;
+{ type: "finishTest"} ;
