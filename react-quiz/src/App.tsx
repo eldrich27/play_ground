@@ -5,7 +5,7 @@ import Main from "./components/Main"
 import Header from "./components/Header"
 import Loader from "./components/Loader"
 import Progress from "./components/Progress"
-import StartScreen from "./components/StartQuiz"
+import StartScreen from "./components/StartScreen"
 import Question from "./components/Questions"
 import ErrorMessage from "./components/Error"
 
