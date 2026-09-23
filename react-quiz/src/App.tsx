@@ -76,7 +76,7 @@ function App() {
         {status === "loading"&& <Loader />}
         {status === "ready" && 
           <>
-          <Progress />
+          {/* <Progress /> */}
           <StartScreen dispatch = {(action) => dispatch(action as Action)}/>
           </>
         }
