@@ -1,10 +1,11 @@
 import type { Dispatch } from "react";
 import type { Questions } from "../types/Questions";
 import { Options } from "./Options";
+import type { Action } from "../types/Action";
 
 interface QuestionsProps {
     question : Questions
-    dispatch :Dispatch<{type: "newAnswer"}>
+    dispatch : Dispatch<Action>
 }
 
 function Question({ question, dispatch }: QuestionsProps) {

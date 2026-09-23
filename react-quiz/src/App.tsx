@@ -96,7 +96,7 @@ function App() {
           <Progress></Progress>
           <Question
             question={questions[index]}
-            dispatch={dispatch as unknown as (action: { type: "newAnswer" }) => void}
+            dispatch={dispatch}
           />
         </>
         }
