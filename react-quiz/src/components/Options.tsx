@@ -17,7 +17,8 @@ export function Options({ options, answer, correctOption, dispatch }: OptionsPro
                 <button 
                     className={`btn btn-option ${(index === answer )? 'answer': ''}
                     ${hasAnswered ?
-                        index === correctOption ? 'correct' : 'wrong'
+                        index === correctOption ? 'correct' : 
+                        index== answer ?'wrong' : ''
                         : ''
                     }
                     `}
