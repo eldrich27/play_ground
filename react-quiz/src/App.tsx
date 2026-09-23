@@ -132,7 +132,12 @@ function App() {
           />
         </>
         }
-        {status === "finished" && <FinishScreen points={points} maxPoints={maxPoints}/>}
+        {status === "finished" && 
+        <FinishScreen 
+          points={points} 
+          maxPoints={maxPoints}
+          dispatch={dispatch}
+        />}
       </Main>
 
     </div>
