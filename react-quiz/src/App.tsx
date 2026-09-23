@@ -71,7 +71,7 @@ function App() {
         }
         const data = await res.json()
         dispatch({type : "dataReceived", payload : data})
-        console.log(data[0])
+        // console.log(data[0])
       } catch {
         console.error("Unable to load data")
         hasError = true
