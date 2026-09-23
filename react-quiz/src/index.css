@@ -145,6 +145,13 @@ progress {
   float: right;
 }
 
+.footer {
+  margin-top: 2.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .options {
   display: flex;
   flex-direction: column;

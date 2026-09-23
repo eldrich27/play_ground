@@ -7,4 +7,5 @@ export type Action = { type: "dataReceived"; payload: Questions[]; } |
 { type: "newAnswer"; payload: number; } |
 { type: "nextQuestion"} |
 { type: "finishTest"} |
-{ type: "reset"};
+{ type: "reset"} |
+{ type: "tick"};

@@ -8,10 +8,15 @@ import Progress from "./components/Progress"
 import StartScreen from "./components/StartScreen"
 import Question from "./components/Questions"
 import ErrorMessage from "./components/Error"
+import Timer from "./components/Timer"
+import Footer from "./components/Footer"
+import NextButton from "./components/NextButton"
 
 import type { Questions } from "./types/Questions"
 import type { Action } from "./types/Action"
 import { FinishScreen } from "./components/FinishScreen"
+
+const SECONDS_PER_QUESTION = 20
 
 type State = {
   questions: Questions[]
@@ -20,6 +25,7 @@ type State = {
   answer : number | null
   points : number
   highscore : number
+  secondsRemaining : number | null
 }
 
 const initialState: State = {
@@ -28,7 +34,8 @@ const initialState: State = {
   index: 0,
   answer : null,
   points:0,
-  highscore:0
+  highscore:0,
+  secondsRemaining: null
 }
 
 function reducer(state: State, action: Action): State {
@@ -49,7 +56,8 @@ function reducer(state: State, action: Action): State {
     case "start_quiz":{
       return {
         ...state,
-        status: "active"
+        status: "active",
+        secondsRemaining: state.questions.length * SECONDS_PER_QUESTION
       }
     }
     case "newAnswer":{
@@ -87,6 +95,15 @@ function reducer(state: State, action: Action): State {
         status: "ready"
       }
     }
+    case "tick":{
+      const secondsRemaining = (state.secondsRemaining ?? 0) - 1
+      return {
+        ...state,
+        secondsRemaining,
+        status: secondsRemaining <= 0 ? "finished" : state.status,
+        highscore: secondsRemaining <= 0 ? Math.max(state.points, state.highscore) : state.highscore
+      }
+    }
     default:
       throw new Error("action not supported")
   }
@@ -94,7 +111,7 @@ function reducer(state: State, action: Action): State {
 
 function App() {
 
-  const [{status, questions, answer, index, points, highscore}, dispatch] = useReducer(reducer, initialState)
+  const [{status, questions, answer, index, points, highscore, secondsRemaining}, dispatch] = useReducer(reducer, initialState)
 
   const numQuestion = questions?.length
 
@@ -138,9 +155,14 @@ function App() {
           <Question
             question={questions[index]}
             answer = {answer}
-            index={index}
             dispatch={dispatch}
           />
+          <Footer>
+            {typeof secondsRemaining === "number" &&
+              <Timer secondsRemaining={secondsRemaining} dispatch={dispatch} />
+            }
+            <NextButton dispatch={dispatch} answer={answer} index={index} numQuestions={numQuestion} />
+          </Footer>
         </>
         }
         {status === "finished" && 
