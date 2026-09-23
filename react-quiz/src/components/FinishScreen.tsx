@@ -13,8 +13,11 @@ export function FinishScreen({points, maxPoints}:FinishScreenProps) {
     
 
     return (
-        <p className="result">
-            {emoji} You have scored {points} of {maxPoints} ({percentage}%)
-        </p>
+        <>
+            <p className="result">
+                {emoji} You have scored {points} of {maxPoints} ({percentage}%)
+            </p>
+            <p className="highscore">HighScore : X Points</p>
+        </>
     );
 }
