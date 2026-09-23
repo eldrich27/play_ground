@@ -4,16 +4,17 @@ import { Options } from "./Options";
 import type { Action } from "../types/Action";
 
 interface QuestionsProps {
-    question : Questions
+    question : Questions,
+    answer : null | number
     dispatch : Dispatch<Action>
 }
 
-function Question({ question, dispatch }: QuestionsProps) {
+function Question({ question, answer, dispatch }: QuestionsProps) {
 
   return (
     <div>
       <h4>{question.question}</h4>
-      <Options options={question.options} dispatch={dispatch} />
+      <Options options={question.options} answer = {answer} dispatch={dispatch} />
     </div>
   );
 }

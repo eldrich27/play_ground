@@ -16,13 +16,14 @@ type State = {
   questions: Questions[]
   status: "loading" | "ready" | "error" | "active" | "finished",
   index: number
-  answer? : number
+  answer : number | null
 }
 
 const initialState: State = {
   questions: [],
   status: "loading",
-  index: 0
+  index: 0,
+  answer : null
 }
 
 function reducer(state: State, action: Action): State {
@@ -59,7 +60,7 @@ function reducer(state: State, action: Action): State {
 
 function App() {
 
-  const [{status, questions, index}, dispatch] = useReducer(reducer, initialState)
+  const [{status, questions, answer, index}, dispatch] = useReducer(reducer, initialState)
 
   const numQuestion = questions?.length
 
@@ -96,6 +97,7 @@ function App() {
           <Progress></Progress>
           <Question
             question={questions[index]}
+            answer = {answer}
             dispatch={dispatch}
           />
         </>
