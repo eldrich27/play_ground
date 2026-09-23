@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useEffect, useReducer } from "react"
 
 // import DateCounter from "./components/DateCounter"
 import Main from "./components/Main"
@@ -8,22 +8,63 @@ import Progress from "./components/Progress"
 import StartScreen from "./components/StartQuiz"
 import Question from "./components/Questions"
 
-const initialState = {numQuestion:0, maxPoints:10}
+const initialState = {
+  questions : [],
+  status : "loading"
+}
 
-function reducer(){
+function reducer(state, action){
+  switch (action.type){
+    case "ready":{
+      return{
+        ...state,
+        status : "ready"
+      }
+    }
+    case "error": {
+      return {
+        ...state,
+        status : "error"
+      }
+    }
+  }
   return null
 }
 
 function App() {
 
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [{status, questions}, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(()=>{
+
+    async function getQuestions(uri:string){
+      try {
+        const res = await fetch(uri)
+        const data = await res.json()
+        dispatch({type : "dataReceived", payload : data})
+        console.log(data[0])
+      } catch {
+        console.error(Error("Unable to load data"))
+        dispatch({type : "error"})
+      }
+      finally {
+        dispatch({ type: "ready" })
+      }
+    }
+    getQuestions("http://localhost:3031/questions")
+  },[])
 
   return (
     <div className="app">
       <Header />
       <Main>
-        <Progress />
-        <StartScreen dispatch = {dispatch}/>
+        {status === "loading"&& <Loader />}
+        {status === "ready" && 
+          <>
+          <Progress />
+          <StartScreen dispatch = {dispatch}/>
+          </>
+        }
       </Main>
 
     </div>
