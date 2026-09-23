@@ -1,9 +1,9 @@
 import type { Dispatch } from "react";
+import type { Action } from "../types/Action";
 
 
 
-
-function StartScreen({numQuestions, dispatch}:{ numQuestions : number ,dispatch : Dispatch<{ type: "start_quiz" }> }) {
+function StartScreen({numQuestions, dispatch}:{ numQuestions : number ,dispatch : Dispatch<Action> }) {
 
   return (
     <div className="start">

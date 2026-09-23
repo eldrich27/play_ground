@@ -10,18 +10,14 @@ import Question from "./components/Questions"
 import ErrorMessage from "./components/Error"
 
 import type { Questions } from "./types/Questions"
+import type { Action } from "./types/Action"
 
 type State = {
   questions: Questions[]
   status: "loading" | "ready" | "error" | "active" | "finished",
   index: number
+  answer? : number
 }
-
-type Action =
-  | { type: "dataReceived"; payload: Questions[] }
-  | { type: "ready" }
-  | { type: "start_quiz" }
-  | { type: "error" }
 
 const initialState: State = {
   questions: [],
@@ -44,11 +40,18 @@ function reducer(state: State, action: Action): State {
         status : "error"
       }
     }
-    case "start_quiz":
+    case "start_quiz":{
       return {
         ...state,
         status: "active"
       }
+    }
+    case "newAnswer":{
+      return {
+        ...state,
+        answer: action.payload
+      }
+    }
     default:
       throw new Error("action not supported")
   }
@@ -91,7 +94,10 @@ function App() {
         {status === "active" &&
         <>
           <Progress></Progress>
-          <Question question={questions[index]}/>
+          <Question
+            question={questions[index]}
+            dispatch={dispatch as unknown as (action: { type: "newAnswer" }) => void}
+          />
         </>
         }
       </Main>
