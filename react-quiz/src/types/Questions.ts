@@ -3,7 +3,7 @@
 export interface Questions{
   id: string,
   question :string,
-  correctOPtion: number,
+  correctOption: number,
   options : Array<string>,
   points : number
 }

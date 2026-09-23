@@ -14,7 +14,7 @@ function Question({ question, answer, dispatch }: QuestionsProps) {
   return (
     <div>
       <h4>{question.question}</h4>
-      <Options options={question.options} answer = {answer} dispatch={dispatch} />
+      <Options options={question.options} answer = {answer} correctOption = {question.correctOption} dispatch={dispatch} />
     </div>
   );
 }

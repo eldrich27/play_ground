@@ -169,7 +169,7 @@ progress {
 }
 
 .answer {
-  transform: translateX(2rem);
+  transform: scale(1.1);
 }
 
 .result {
