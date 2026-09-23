@@ -74,12 +74,7 @@ function App() {
       <Header />
       <Main>
         {status === "loading"&& <Loader />}
-        {status === "ready" && 
-          <>
-          {/* <Progress /> */}
-          <StartScreen dispatch = {(action) => dispatch(action as Action)}/>
-          </>
-        }
+        {status === "ready" && <StartScreen dispatch = {(action) => dispatch(action as Action)}/>}
         {status === "error" && <ErrorMessage/>}
       </Main>
 
