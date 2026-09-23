@@ -7,14 +7,30 @@ import Loader from "./components/Loader"
 import Progress from "./components/Progress"
 import StartScreen from "./components/StartQuiz"
 import Question from "./components/Questions"
+import ErrorMessage from "./components/Error"
 
-const initialState = {
-  questions : [],
-  status : "loading"
+type State = {
+  questions: unknown[]
+  status: "loading" | "ready" | "error"
 }
 
-function reducer(state, action){
+type Action =
+  | { type: "dataReceived"; payload: unknown[] }
+  | { type: "ready" }
+  | { type: "error" }
+
+const initialState: State = {
+  questions: [],
+  status: "loading"
+}
+
+function reducer(state: State, action: Action): State {
   switch (action.type){
+    case "dataReceived":
+      return {
+        ...state,
+        questions: action.payload
+      }
     case "ready":{
       return{
         ...state,
@@ -27,8 +43,9 @@ function reducer(state, action){
         status : "error"
       }
     }
+    default:
+      throw new Error("action not supported")
   }
-  return null
 }
 
 function App() {
@@ -38,17 +55,23 @@ function App() {
   useEffect(()=>{
 
     async function getQuestions(uri:string){
+      let hasError = false
       try {
         const res = await fetch(uri)
+        if (!res.ok) {
+          throw new Error(`Request failed: ${res.status}`)
+        }
         const data = await res.json()
         dispatch({type : "dataReceived", payload : data})
         console.log(data[0])
       } catch {
-        console.error(Error("Unable to load data"))
+        console.error("Unable to load data")
+        hasError = true
         dispatch({type : "error"})
-      }
-      finally {
+      } finally {
+        if (!hasError) {
         dispatch({ type: "ready" })
+        }
       }
     }
     getQuestions("http://localhost:3031/questions")
@@ -62,9 +85,10 @@ function App() {
         {status === "ready" && 
           <>
           <Progress />
-          <StartScreen dispatch = {dispatch}/>
+          <StartScreen dispatch = {(action) => dispatch(action as Action)}/>
           </>
         }
+        {status === "error" && <ErrorMessage/>}
       </Main>
 
     </div>
