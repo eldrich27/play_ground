@@ -86,7 +86,8 @@ function App() {
         {status === "error" && <ErrorMessage/>}
         {status === "active" &&
         <>
-        <Progress></Progress>
+          <Progress></Progress>
+          <Question />
         </>
         }
       </Main>
