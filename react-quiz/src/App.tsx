@@ -17,13 +17,15 @@ type State = {
   status: "loading" | "ready" | "error" | "active" | "finished",
   index: number
   answer : number | null
+  points : number
 }
 
 const initialState: State = {
   questions: [],
   status: "loading",
   index: 0,
-  answer : null
+  answer : null,
+  points:0
 }
 
 function reducer(state: State, action: Action): State {
@@ -48,9 +50,14 @@ function reducer(state: State, action: Action): State {
       }
     }
     case "newAnswer":{
+      const question = state.questions[state.index]
       return {
         ...state,
-        answer: action.payload
+        answer: action.payload,
+        points: 
+          action.payload === question.correctOption ?
+          state.points + question.points : state.points
+
       }
     }
     default:
@@ -60,7 +67,7 @@ function reducer(state: State, action: Action): State {
 
 function App() {
 
-  const [{status, questions, answer, index}, dispatch] = useReducer(reducer, initialState)
+  const [{status, questions, answer, index, points}, dispatch] = useReducer(reducer, initialState)
 
   const numQuestion = questions?.length
 
@@ -94,7 +101,7 @@ function App() {
         {status === "error" && <ErrorMessage/>}
         {status === "active" &&
         <>
-          <Progress></Progress>
+          <Progress numQuestions={numQuestion} points={points}/>
           <Question
             question={questions[index]}
             answer = {answer}
