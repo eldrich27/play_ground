@@ -17,6 +17,7 @@ type State = {
 type Action =
   | { type: "dataReceived"; payload: unknown[] }
   | { type: "ready" }
+  | { type: "start_quiz" }
   | { type: "error" }
 
 const initialState: State = {
@@ -39,6 +40,11 @@ function reducer(state: State, action: Action): State {
         status : "error"
       }
     }
+    case "start_quiz":
+      return {
+        ...state,
+        status: "active"
+      }
     default:
       throw new Error("action not supported")
   }
@@ -47,6 +53,8 @@ function reducer(state: State, action: Action): State {
 function App() {
 
   const [{status, questions}, dispatch] = useReducer(reducer, initialState)
+
+  const numQuestion = questions?.length
 
   useEffect(()=>{
 
@@ -74,8 +82,13 @@ function App() {
       <Header />
       <Main>
         {status === "loading"&& <Loader />}
-        {status === "ready" && <StartScreen dispatch = {(action) => dispatch(action as Action)}/>}
+        {status === "ready" && <StartScreen numQuestions={numQuestion} dispatch={dispatch} />}
         {status === "error" && <ErrorMessage/>}
+        {status === "active" &&
+        <>
+        <Progress></Progress>
+        </>
+        }
       </Main>
 
     </div>
