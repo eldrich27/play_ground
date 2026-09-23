@@ -6,25 +6,26 @@ interface OptionsProps{
     options: Questions["options"],
     answer: null | number,
     correctOption: number,
+    index: number,
     dispatch : Dispatch<Action>
 }
 
-export function Options({ options, answer, correctOption, dispatch }: OptionsProps) {
+export function Options({ options, answer, correctOption,index, dispatch }: OptionsProps) {
     const hasAnswered = answer !== null;
     return(
         <>
         <div className="options">
-            {options.map((option, index) => (
+            {options.map((option, indx) => (
                 <button 
-                    className={`btn btn-option ${(index === answer )? 'answer': ''}
+                    className={`btn btn-option ${(indx === answer )? 'answer': ''}
                     ${hasAnswered ?
-                        index === correctOption ? 'correct' : 
-                        index== answer ?'wrong' : ''
+                        indx === correctOption ? 'correct' : 
+                        indx== answer ?'wrong' : ''
                         : ''
                     }
                     `}
                     key={option}
-                    onClick={() => dispatch({ type: "newAnswer", payload: index })}
+                    onClick={() => dispatch({ type: "newAnswer", payload: indx })}
                     disabled = {hasAnswered}
                 >
                     {option}
@@ -32,11 +33,19 @@ export function Options({ options, answer, correctOption, dispatch }: OptionsPro
             ))}
             
       </div>
-      {hasAnswered && <button className="btn btn-ui"
-        onClick={()=>{dispatch({ type:"nextQuestion"})}}
-      >
-        Next
-    </button>}
+      {hasAnswered && 
+       index <= 14 ? 
+        <button className="btn btn-ui"
+            onClick={()=>{dispatch({ type:"nextQuestion"})}}
+        >
+            Next
+        </button>
+        :  <button className="btn btn-ui"
+            onClick={()=>{dispatch({ type:"finishTest"})}}
+        >
+            Finish
+        </button>
+    }
       
       </>
     )

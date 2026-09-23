@@ -124,7 +124,7 @@ function App() {
           />
         </>
         }
-        {status === "finished" && <FinishScreen/>}
+        {status === "finished" && <FinishScreen points={points} maxPoints={maxPoints}/>}
       </Main>
 
     </div>
