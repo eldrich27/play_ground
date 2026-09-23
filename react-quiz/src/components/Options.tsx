@@ -33,8 +33,7 @@ export function Options({ options, answer, correctOption,index, dispatch }: Opti
             ))}
             
       </div>
-      {hasAnswered && 
-       index <= 14 ? 
+      {hasAnswered && (index < 14 ? 
         <button className="btn btn-ui"
             onClick={()=>{dispatch({ type:"nextQuestion"})}}
         >
@@ -45,7 +44,7 @@ export function Options({ options, answer, correctOption,index, dispatch }: Opti
         >
             Finish
         </button>
-    }
+      )}
       
       </>
     )

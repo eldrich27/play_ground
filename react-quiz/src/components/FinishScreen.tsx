@@ -5,10 +5,16 @@ interface FinishScreenProps{
 
 export function FinishScreen({points, maxPoints}:FinishScreenProps) {
     const percentage = maxPoints > 0 ? Math.round((points / maxPoints) * 100) : 0;
+    const emoji = percentage === 100 ? "🏆" 
+    : percentage >= 80 ? "🎉" 
+    : percentage >= 60 ? "😊" 
+    : percentage >= 40 ? "🙂" 
+    : "😔";
+    
 
     return (
         <p className="result">
-            You have scored {points} of {maxPoints} ({percentage}%)
+            {emoji} You have scored {points} of {maxPoints} ({percentage}%)
         </p>
     );
 }
