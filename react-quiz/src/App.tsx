@@ -76,6 +76,13 @@ function reducer(state: State, action: Action): State {
         status: "finished"
       }
     }
+    case "reset":{
+      return {
+        ...initialState,
+        questions: state.questions,
+        status: "ready"
+      }
+    }
     default:
       throw new Error("action not supported")
   }
