@@ -9,20 +9,24 @@ import StartScreen from "./components/StartScreen"
 import Question from "./components/Questions"
 import ErrorMessage from "./components/Error"
 
+import type { Questions } from "./types/Questions"
+
 type State = {
-  questions: unknown[]
-  status: "loading" | "ready" | "error" | "active" | "finished"
+  questions: Questions[]
+  status: "loading" | "ready" | "error" | "active" | "finished",
+  index: number
 }
 
 type Action =
-  | { type: "dataReceived"; payload: unknown[] }
+  | { type: "dataReceived"; payload: Questions[] }
   | { type: "ready" }
   | { type: "start_quiz" }
   | { type: "error" }
 
 const initialState: State = {
   questions: [],
-  status: "loading"
+  status: "loading",
+  index: 0
 }
 
 function reducer(state: State, action: Action): State {
@@ -52,7 +56,7 @@ function reducer(state: State, action: Action): State {
 
 function App() {
 
-  const [{status, questions}, dispatch] = useReducer(reducer, initialState)
+  const [{status, questions, index}, dispatch] = useReducer(reducer, initialState)
 
   const numQuestion = questions?.length
 
@@ -87,7 +91,7 @@ function App() {
         {status === "active" &&
         <>
           <Progress></Progress>
-          <Question />
+          <Question question={questions[index]}/>
         </>
         }
       </Main>
