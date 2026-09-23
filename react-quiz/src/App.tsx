@@ -11,7 +11,7 @@ import ErrorMessage from "./components/Error"
 
 type State = {
   questions: unknown[]
-  status: "loading" | "ready" | "error"
+  status: "loading" | "ready" | "error" | "active" | "finished"
 }
 
 type Action =
@@ -29,14 +29,10 @@ function reducer(state: State, action: Action): State {
     case "dataReceived":
       return {
         ...state,
-        questions: action.payload
-      }
-    case "ready":{
-      return{
-        ...state,
+        questions: action.payload,
         status : "ready"
       }
-    }
+    
     case "error": {
       return {
         ...state,
@@ -68,11 +64,7 @@ function App() {
         console.error("Unable to load data")
         hasError = true
         dispatch({type : "error"})
-      } finally {
-        if (!hasError) {
-        dispatch({ type: "ready" })
-        }
-      }
+      } 
     }
     getQuestions("http://localhost:3031/questions")
   },[])
