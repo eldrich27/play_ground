@@ -1,10 +1,14 @@
+import type { Questions } from "../types/Questions";
 
+interface QuestionsProps {
+    question : Questions
+}
 
-function Question() {
+function Question({ question }: QuestionsProps) {
 
   return (
     <div>
-      <h4>Some Question</h4>
+      <h4>{question.question}</h4>
     </div>
   );
 }
