@@ -12,6 +12,7 @@ interface OptionsProps{
 export function Options({ options, answer, correctOption, dispatch }: OptionsProps) {
     const hasAnswered = answer !== null;
     return(
+        <>
         <div className="options">
             {options.map((option, index) => (
                 <button 
@@ -29,6 +30,14 @@ export function Options({ options, answer, correctOption, dispatch }: OptionsPro
                     {option}
                 </button>
             ))}
+            
       </div>
+      {hasAnswered && <button className="btn btn-ui"
+    onClick={()=>{dispatch({ type:"nextQuestion"})}}
+      >
+        Next
+    </button>}
+      
+      </>
     )
 }
