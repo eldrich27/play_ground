@@ -4,7 +4,7 @@ function Progress() {
 //   const { index, numQuestions, points, maxPossiblePoints, answer } = useQuiz();
 
   return (
-    <header className="progress">
+    <div className="progress">
       <progress max={15} value={1} />
 
       <p>
@@ -14,7 +14,7 @@ function Progress() {
       <p>
         <strong>{0}</strong> / {250}
       </p>
-    </header>
+    </div>
   );
 }
 
