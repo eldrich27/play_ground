@@ -4,6 +4,7 @@ import './App.css'
 import { Home } from './pages/Home'
 import { Products } from './pages/Products'
 import { Pricing } from './pages/Pricing'
+import { PageNotFound } from './pages/PageNotFound'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/products' element={<Products/>}/>
         <Route path='/pricing' element={<Pricing/>}/>
+        <Route path='/*' element={<PageNotFound/>}/>
       </Routes>
     </BrowserRouter>
   )

@@ -1,6 +1,6 @@
 
 
-export function Products(){
+export function PageNotFound(){
     return(
         <h1>404 : Page Not found</h1>
     )
