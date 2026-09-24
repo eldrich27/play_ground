@@ -1,7 +1,10 @@
-
+import { PageNav } from "../components/PageNav"
 
 export function Home(){
     return(
-        <div>Home !</div>
+        <div>
+            <PageNav />
+            <h1>Home !</h1>
+        </div>
     )
 }
