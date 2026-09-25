@@ -6,7 +6,7 @@
 }
 
 .product section {
-  width: clamp(80rem, 80%, 90rem);
+  width: min(90rem, 100%);
   margin: 6rem auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -15,11 +15,14 @@
 }
 
 .product section img {
+  display: block;
   width: 100%;
+  height: auto;
+  border-radius: 7px;
 }
 
 .product h2 {
-  font-size: 4rem;
+  font-size: clamp(2.8rem, 2rem + 2.5vw, 4rem);
   line-height: 1.2;
   margin-bottom: 3rem;
 }
@@ -31,4 +34,40 @@
 
 .product section a {
   margin-top: 2rem;
+}
+
+/* Tablets: stack image and text */
+@media (max-width: 56em) {
+  .product {
+    padding: 2.5rem 3rem;
+  }
+
+  .product section {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    margin: 4rem auto;
+    max-width: 60rem;
+  }
+
+  .product h2 {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Phones: tighten outer spacing */
+@media (max-width: 34em) {
+  .product {
+    margin: 1.2rem;
+    padding: 2rem 1.6rem;
+    min-height: calc(100vh - 2.4rem);
+  }
+
+  .product section {
+    gap: 3rem;
+    margin: 3rem auto;
+  }
+
+  .product p {
+    font-size: 1.5rem;
+  }
 }
