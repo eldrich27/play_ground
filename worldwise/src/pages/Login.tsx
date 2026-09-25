@@ -11,6 +11,8 @@ export default function Login() {
     <main className={styles.login}>
       <PageNav></PageNav>
       <form className={styles.form}>
+        <h2 className={styles.title}>Log in to WorldWise</h2>
+
         <div className={styles.row}>
           <label htmlFor="email">Email address</label>
           <input
@@ -32,7 +34,7 @@ export default function Login() {
         </div>
 
         <div>
-          <button>Login</button>
+          <button className={styles.button}>Login</button>
         </div>
       </form>
     </main>
