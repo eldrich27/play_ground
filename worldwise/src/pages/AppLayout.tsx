@@ -1,7 +1,7 @@
 import styles from "./AppLayout.module.css";
 
 
-export function AppLayout(){
+export default function AppLayout(){
     return (
         <main className={styles.app}>
       <section>
