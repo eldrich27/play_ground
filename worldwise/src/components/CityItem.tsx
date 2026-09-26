@@ -7,6 +7,14 @@ interface CityItemProps{
     city: Cities
 }
 
+function formatDate(date: string) {
+    return new Intl.DateTimeFormat("en-US", {
+        month: "long",
+        day: "2-digit",
+        year: "numeric",
+    }).format(new Date(date));
+}
+
 // Windows has no flag emoji glyphs, so turn "🇵🇹" into "pt" and show an image instead
 function flagEmojiToPNG(flag: string){
     const countryCode = Array.from(flag, (char) =>
@@ -22,7 +30,7 @@ export function CityItem({city}:CityItemProps){
     <li className={style.cityItem}>
         <span className={style.emoji}>{flagEmojiToPNG(city.emoji)}</span>
         <p className={style.name}>{city.cityName}</p>
-        <time className={style.date}>{city.date}</time>
+        <time className={style.date} dateTime={city.date}>{formatDate(city.date)}</time>
     </li>
  )
 }
