@@ -13,7 +13,7 @@ interface CityListProps{
 export function CityList({cities, isLoading}:CityListProps){
     if(isLoading) return <Spinner />
 
-    if (!cities.length) return <Message message="No Cities Found! Start your journey today!" />
+    if (!cities.length) return <Message message="No Cities Found! Add your first city by clicking on the map" />
 
     return(
         <ul className={style.cityList}>
