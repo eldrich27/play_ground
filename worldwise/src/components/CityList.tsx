@@ -2,6 +2,7 @@ import type { Cities } from "../types/Cities"
 import style from "./CityList.module.css"
 
 import { CityItem } from "./CityItem"
+import Spinner from "./Spinner"
 
 interface CityListProps{
     cities :Cities[],
@@ -9,7 +10,7 @@ interface CityListProps{
 }
 
 export function CityList({cities, isLoading}:CityListProps){
-    // if(!isLoading) return <Spinner />
+    if(isLoading) return <Spinner />
 
     return(
         <ul className={style.cityList}>
