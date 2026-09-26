@@ -1,5 +1,5 @@
 import styles from "./CountryItem.module.css";
-import type { Country } from "./CountryList";
+import type { Country } from "../types/Country";
 
 interface CountryItemProps {
   country: Country;

@@ -4,11 +4,8 @@ import CountryItem from "./CountryItem";
 import Message from "./Message";
 import type { Cities } from "../types/Cities";
 
+import type { Country } from "../types/Country";
 
-export interface Country {
-  country: string;
-  emoji: string;
-}
 
 interface CountryListProps{
   cities: Cities[];
