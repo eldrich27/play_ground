@@ -4,23 +4,11 @@ import style from "./Map.module.css"
 
 export default function Map(){
     const navigate = useNavigate()
-    const [searchParams, setSearchParams] = useSearchParams();
-    const lat = searchParams.get('lat');
-    const lng = searchParams.get('lng')
+    
 
     return(
         <div className={style.mapContainer} onClick={()=>{navigate('form')}}>
             <h1>Welcome from Maps!</h1>
-            <h2>Positions</h2>
-            <h4>lat : {lat}</h4>
-            <h4>lng : {lng}</h4>
-            <button
-            onClick={()=>{
-                setSearchParams({lat :'50.555', lng:'35.2727'})
-            }}
-            > 
-            Set New Param
-            </button>
         </div>
     )
 }
