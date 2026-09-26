@@ -11,10 +11,14 @@ interface CityItemProps{
 
 
 export function CityItem({city}:CityItemProps){
+    const {lat, lng} = city.position
   
     return(
         <li >
-            <Link className={style.cityItem} to={`${city.id}`}>
+            <Link 
+                className={style.cityItem} 
+                to={`${city.id}?lat${lat}&lng${lng}`}
+            >
                 <span className={style.emoji}>{convertToEmoji(city.emoji)}</span>
                 <p className={style.name}>{city.cityName}</p>
                 <time className={style.date} dateTime={city.date}>{formatDate(city.date)}</time>
