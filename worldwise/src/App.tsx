@@ -19,7 +19,7 @@ function App() {
         <Route path='/app' element={<AppLayout/>}>
           <Route  index element={<p>List of Cities</p>}/>
           <Route  path='cities' element={<p>List of Cities</p>}/>
-          <Route  path='country' element={<p>List of Country</p>}/>
+          <Route  path='countries' element={<p>List of Country</p>}/>
           <Route  path='form' element={<p>Form View</p>}/>
         </Route>
         <Route path='/*' element={<PageNotFound/>}/>
