@@ -8,13 +8,43 @@ import PageNotFound from './pages/PageNotFound'
 import Login from './pages/Login'
 import AppLayout  from './pages/AppLayout'
 import { CityList } from './components/CityList'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+import type { Cities } from './types/Cities'
 
 
 function App() {
 
-  const [cities, setCities] = useState([])
+  const [cities, setCities] = useState<Cities[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  // using effect to load the data
+  useEffect(() => {
+    const controller = new AbortController()
+
+    async function fetchCities() {
+      setIsLoading(true)
+
+      try {
+        const resp = await fetch('http://localhost:3031/cities', {
+          signal: controller.signal,
+        })
+
+        const data = await resp.json()
+        setCities(data)
+      } catch (err) {
+        if (err instanceof Error && err.name !== 'AbortError') {
+          console.error(err)
+        }
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchCities()
+
+    return () => controller.abort()
+  }, [])
 
   return (
     <BrowserRouter>
