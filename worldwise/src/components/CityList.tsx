@@ -1,13 +1,20 @@
+import type { Cities } from "../types/Cities"
 import style from "./CityList.module.css"
 
+interface CityListProps{
+    cities :Cities[],
+    isLoading: boolean
+}
 
+export function CityList({cities, isLoading}:CityListProps){
+    // if(!isLoading) return <Spinner />
 
-export function CityList(){
     return(
+        
         <ul className={style.cityList}>
-            <li> List 1</li>
-            <li> List 2</li>
-            <li> List 3</li>
+            {cities.map((city)=>{
+                <CityItem city= {city}, key={city.id}/>
+            })}
         </ul>
     )
 }
