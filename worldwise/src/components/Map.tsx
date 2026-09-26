@@ -13,6 +13,13 @@ export default function Map(){
             <h2>Positions</h2>
             <h4>lat : {lat}</h4>
             <h4>lng : {lng}</h4>
+            <button
+            onClick={()=>{
+                setSearchParams({lat :'50.555', lng:'35.2727'})
+            }}
+            > 
+            Set New Param
+            </button>
         </div>
     )
 }
