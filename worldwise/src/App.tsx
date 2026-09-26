@@ -8,9 +8,13 @@ import PageNotFound from './pages/PageNotFound'
 import Login from './pages/Login'
 import AppLayout  from './pages/AppLayout'
 import { CityList } from './components/CityList'
+import { useState } from 'react'
 
 
 function App() {
+
+  const [cities, setCities] = useState([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   return (
     <BrowserRouter>
