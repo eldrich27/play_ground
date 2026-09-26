@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
 
@@ -34,7 +36,7 @@ export default function Login() {
         </div>
 
         <div>
-          <button className={styles.button}>Login</button>
+          <Link to="/app"><button className={styles.button}>Login</button></Link>
         </div>
       </form>
     </main>
