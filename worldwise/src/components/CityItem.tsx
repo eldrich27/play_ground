@@ -17,7 +17,7 @@ export function CityItem({city}:CityItemProps){
         <li >
             <Link 
                 className={style.cityItem} 
-                to={`${city.id}?lat${lat}&lng${lng}`}
+                to={`${city.id}?lat=${lat}&lng=${lng}`}
             >
                 <span className={style.emoji}>{convertToEmoji(city.emoji)}</span>
                 <p className={style.name}>{city.cityName}</p>
