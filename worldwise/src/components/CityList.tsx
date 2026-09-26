@@ -3,6 +3,7 @@ import style from "./CityList.module.css"
 
 import { CityItem } from "./CityItem"
 import Spinner from "./Spinner"
+import Message from "./Message"
 
 interface CityListProps{
     cities :Cities[],
@@ -11,6 +12,8 @@ interface CityListProps{
 
 export function CityList({cities, isLoading}:CityListProps){
     if(isLoading) return <Spinner />
+
+    if (!cities.length) return <Message message="No Cities Found! Start your journey today!" />
 
     return(
         <ul className={style.cityList}>
