@@ -3,15 +3,15 @@ import style from './Button.module.css'
 
 
 export function Button({onClick, type, children}: PropsWithChildren<{
-    onClick: () => void;
+    onClick?: () => void;
     type: string;
 }>){
     return(
         <button 
-            className={style[type]}
+            className={`${style.btn} ${style[type]}`}
             onClick={(e)=>{
                 e.preventDefault();
-                onClick()
+                onClick && onClick()
             }}
         >
             {children}
