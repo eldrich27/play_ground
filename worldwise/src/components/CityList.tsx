@@ -4,13 +4,18 @@ import style from "./CityList.module.css"
 import { CityItem } from "./CityItem"
 import Spinner from "./Spinner"
 import Message from "./Message"
+import { useCities } from "../context/CityContext"
 
 interface CityListProps{
     cities :Cities[],
     isLoading: boolean
 }
 
-export function CityList({cities, isLoading}:CityListProps){
+
+export function CityList(){
+    // using useCity hook to use the cities context provider
+    const {cities , isLoading} = useCities()
+
     if(isLoading) return <Spinner />
 
     if (!cities.length) return <Message message="No Cities Found! Add your first city by clicking on the map" />
