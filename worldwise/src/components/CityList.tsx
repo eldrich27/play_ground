@@ -1,4 +1,3 @@
-import type { Cities } from "../types/Cities"
 import style from "./CityList.module.css"
 
 import { CityItem } from "./CityItem"
@@ -6,10 +5,6 @@ import Spinner from "./Spinner"
 import Message from "./Message"
 import { useCities } from "../context/CityContext"
 
-interface CityListProps{
-    cities :Cities[],
-    isLoading: boolean
-}
 
 
 export function CityList(){
