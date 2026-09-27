@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import './App.css'
-import { CitiesProvider, useCities } from './context/CityContext'
+import { CitiesProvider } from './context/CityContext'
 import Homepage from './pages/Homepage'
 import Product from './pages/Products'
 import Pricing from './pages/Pricing'
