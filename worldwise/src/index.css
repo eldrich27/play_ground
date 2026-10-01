@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap");
-
+@import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
 :root {
   --color-brand--1: #ffb545;
   --color-brand--2: #00c46a;
