@@ -1,33 +1,35 @@
 import { useEffect, useState } from "react"
 
-import { useSearchParams, useNavigate } from "react-router-dom"
-import { useMap } from "react-leaflet"
+import { useSearchParams } from "react-router-dom"
+import { useMap, useMapEvents } from "react-leaflet"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 
 import "leaflet/dist/leaflet.css"
 import style from "./Map.module.css"
 
+const DEFAULT_CENTER: [number, number] = [51.505, -0.09];
+
 
 export default function Map(){
-    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const lat = searchParams.get("lat");
     const lng = searchParams.get("lng");
 
-    const [mapCenter, setMapCenter] = useState<[number, number]>([51.505, -0.09]);
+    // Remember the last selected city so the map stays there when the URL no longer has lat/lng
+    const [mapCenter, setMapCenter] = useState<[number, number]>(() =>
+        lat && lng ? [parseFloat(lat), parseFloat(lng)] : DEFAULT_CENTER
+    );
 
     useEffect(() => {
-        if (lat && lng) {
-            setMapCenter([parseFloat(lat), parseFloat(lng)]);
-        }
+        if (lat && lng) setMapCenter([parseFloat(lat), parseFloat(lng)]);
     }, [lat, lng]);
 
     return(
         <div className={style.mapContainer} >
-            <MapContainer 
-                className={style.map} 
-                
-                zoom={6} 
+            <MapContainer
+                className={style.map}
+                center={mapCenter}
+                zoom={6}
                 scrollWheelZoom={true}
             >
                 <TileLayer
@@ -40,6 +42,7 @@ export default function Map(){
                     </Popup>
                 </Marker>
                 <ChangeMapCenter position={mapCenter} />
+                <MapClickHandler />
             </MapContainer>
         </div>
     )
@@ -48,6 +51,21 @@ export default function Map(){
 
 function ChangeMapCenter({ position }: { position: [number, number] }) {
     const map = useMap();
-    map.setView(position);
+    const [lat, lng] = position;
+
+    useEffect(() => {
+        map.setView([lat, lng]);
+    }, [map, lat, lng]);
+
+    return null;
+}
+
+function MapClickHandler() {
+    useMapEvents({
+        click: (e) => {
+            const { lat, lng } = e.latlng;
+            console.log(`Clicked at latitude: ${lat}, longitude: ${lng}`);
+        }
+    });
     return null;
 }
