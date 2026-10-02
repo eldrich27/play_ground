@@ -1,30 +1,53 @@
-// import { useSearchParams, useNavigate } from "react-router-dom"
-import "leaflet/dist/leaflet.css"
+import { useEffect, useState } from "react"
+
+import { useSearchParams, useNavigate } from "react-router-dom"
+import { useMap } from "react-leaflet"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
+
+import "leaflet/dist/leaflet.css"
 import style from "./Map.module.css"
 
 
 export default function Map(){
-    // const navigate = useNavigate()
-    
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const lat = searchParams.get("lat");
+    const lng = searchParams.get("lng");
+
+    const [mapCenter, setMapCenter] = useState<[number, number]>([51.505, -0.09]);
+
+    useEffect(() => {
+        if (lat && lng) {
+            setMapCenter([parseFloat(lat), parseFloat(lng)]);
+        }
+    }, [lat, lng]);
 
     return(
         <div className={style.mapContainer} >
             <MapContainer 
                 className={style.map} 
-                center={[51.505, -0.09] as [number, number]} 
-                zoom={13} 
-                scrollWheelZoom={true}>
+                
+                zoom={6} 
+                scrollWheelZoom={true}
+            >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                 />
-                <Marker position={[51.505, -0.09]}>
+                <Marker position={mapCenter}>
                     <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.
                     </Popup>
                 </Marker>
+                <ChangeMapCenter position={mapCenter} />
             </MapContainer>
         </div>
     )
+}
+
+
+function ChangeMapCenter({ position }: { position: [number, number] }) {
+    const map = useMap();
+    map.setView(position);
+    return null;
 }
