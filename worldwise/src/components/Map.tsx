@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { useSearchParams } from "react-router-dom"
+import { useSearchParams, useNavigate } from "react-router-dom"
 import { useMap, useMapEvents } from "react-leaflet"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 
@@ -11,6 +11,7 @@ const DEFAULT_CENTER: [number, number] = [51.505, -0.09];
 
 
 export default function Map(){
+    
     const [searchParams] = useSearchParams();
     const lat = searchParams.get("lat");
     const lng = searchParams.get("lng");
@@ -61,10 +62,12 @@ function ChangeMapCenter({ position }: { position: [number, number] }) {
 }
 
 function MapClickHandler() {
+    const navigate = useNavigate()
     useMapEvents({
         click: (e) => {
+            
             const { lat, lng } = e.latlng;
-            console.log(`Clicked at latitude: ${lat}, longitude: ${lng}`);
+            navigate(`/app/form?lat=${lat}&lng=${lng}`);
         }
     });
     return null;
