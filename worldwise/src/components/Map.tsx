@@ -6,6 +6,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 
 import "leaflet/dist/leaflet.css"
 import style from "./Map.module.css"
+import { Button } from "./Button"
+import { useGeolocation } from "../hooks/useGeolocation"
 
 const DEFAULT_CENTER: [number, number] = [51.505, -0.09];
 
@@ -25,12 +27,31 @@ export default function Map(){
         if (lat && lng) setMapCenter([parseFloat(lat), parseFloat(lng)]);
     }, [lat, lng]);
 
+    const {
+        position: geoPosition,
+        isLoading: isLoadingPosition,
+        error: geoError,
+        getPosition,
+    } = useGeolocation();
+
+    // Move the map to the user's location once the browser gives it to us
+    useEffect(() => {
+        if (geoPosition) setMapCenter([geoPosition.lat, geoPosition.lng]);
+    }, [geoPosition]);
+
+    useEffect(() => {
+        if (geoError) alert(geoError);
+    }, [geoError]);
+
     return(
         <div className={style.mapContainer} >
+            <Button type="position" onClick={getPosition}>
+                {isLoadingPosition ? "Loading..." : "Use your position"}
+            </Button>
             <MapContainer
                 className={style.map}
                 center={mapCenter}
-                zoom={6}
+                zoom={18}
                 scrollWheelZoom={true}
             >
                 <TileLayer

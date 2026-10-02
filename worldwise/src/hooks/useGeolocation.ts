@@ -1,5 +1,5 @@
 // hooks/useGeolocation.ts
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface GeoPosition {
   lat: number;
@@ -16,10 +16,20 @@ export function useGeolocation() {
   const [state, setState] = useState<GeolocationState>({
     position: null,
     error: null,
-    isLoading: true,  // true until we get a first answer (success OR error)
+    isLoading: false,  // nothing is requested until getPosition is called
   });
 
+  // getCurrentPosition can't be cancelled, so remember if we unmounted and ignore late results
+  const isMounted = useRef(true);
   useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  // Ask the browser for the position on demand (e.g. when a button is clicked)
+  function getPosition() {
     // Guard: browser might not support geolocation (very old browsers)
     if (!navigator.geolocation) {
       setState({
@@ -29,13 +39,13 @@ export function useGeolocation() {
       });
       return;
     }
-    
-    // getCurrentPosition can't be cancelled, so ignore its result after unmount
-    let ignore = false;
-    // Ask the browser for the position (async — user may take time to decide)
+
+    setState((prev) => ({ ...prev, error: null, isLoading: true }));
+
     navigator.geolocation.getCurrentPosition(
       // Success callback — position comes wrapped in a GeolocationPosition object
-      (pos) =>
+      (pos) => {
+        if (!isMounted.current) return;
         setState({
           position: {
             lat: pos.coords.latitude,
@@ -43,22 +53,20 @@ export function useGeolocation() {
           },
           error: null,
           isLoading: false,
-        }),
+        });
+      },
 
       // Error callback — denied permission, timeout, no signal...
-      (err) =>
+      (err) => {
+        if (!isMounted.current) return;
         setState({
           position: null,
           error: err.message,
           isLoading: false,
-        })
+        });
+      }
     );
+  }
 
-    // Cleanup: cancel the pending request if the component unmounts first
-    return () => {
-      ignore = true;
-    };
-  }, []);  // empty deps = ask once on mount
-
-  return state;  // { position, error, isLoading }
+  return { ...state, getPosition };  // { position, error, isLoading, getPosition }
 }
