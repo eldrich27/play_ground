@@ -56,9 +56,14 @@ function Form() {
     fetchCityData();
   },[lat, lng]);
 
+  // Conditional rendering based on the state of geocoding
   if (isLoadingGeocoding) return <Spinner />;
 
+  // Display error message if geocoding failed
   if (geocodingError) return <Message message={geocodingError} />;
+
+  // Display a message if lat or lng is not available
+  if (!lat || !lng) return <Message message="Start by clicking somewhere on the map 🌍" />;
 
   return (
     <form className={styles.form}>
