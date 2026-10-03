@@ -5,6 +5,8 @@ import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
 import { useUrlLocation } from "../hooks/useUrlLocation";
 import Message from "./Message";
+import Spinner from "./Spinner";
+import { convertToEmoji, convertToEmoji2 } from "../utils/convertToEmoji";
 
 
 const Base_Url = "https://api.bigdatacloud.net/data/reverse-geocode-client?"
@@ -15,6 +17,7 @@ function Form() {
   const [date, setDate] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [emoji, setEmoji] = useState<string>("");
+  const [isLoadingGeocoding, setIsLoadingGeocoding] = useState<boolean>(false);
   const [geocodingError, setGeocodingError] = useState<string>("");
   const { lat, lng } = useUrlLocation();
 
@@ -23,6 +26,7 @@ function Form() {
   useEffect(() => {
     const fetchCityData = async () => {
       try {
+        setIsLoadingGeocoding(true);
         setGeocodingError("");
         const response = await fetch(`${Base_Url}latitude=${lat}&longitude=${lng}`);
         if (!response.ok) {
@@ -36,7 +40,7 @@ function Form() {
         }
         setCityName(city);
         setCountry(data.countryName);
-        setEmoji(data.countryCode);
+        setEmoji(convertToEmoji2(data.countryCode));
       } catch (error) {
         console.error("Error fetching city data:", error);
         setGeocodingError(
@@ -44,11 +48,15 @@ function Form() {
             ? error.message
             : "Something went wrong while fetching city data."
         );
+      } finally {
+        setIsLoadingGeocoding(false);
       }
     };
 
     fetchCityData();
   },[lat, lng]);
+
+  if (isLoadingGeocoding) return <Spinner />;
 
   if (geocodingError) return <Message message={geocodingError} />;
 
@@ -61,13 +69,14 @@ function Form() {
           onChange={(e) => setCityName(e.target.value)}
           value={cityName}
         />
-        <span className={styles.flag}>{emoji}</span>
+        {emoji && <span className={styles.flag}>{convertToEmoji(emoji)}</span>}
       </div>
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
         <input
           id="date"
+          type="date"
           onChange={(e) => setDate(e.target.value)}
           value={date}
         />
@@ -77,6 +86,8 @@ function Form() {
         <label htmlFor="notes">Notes about your trip to {cityName}</label>
         <textarea
           id="notes"
+          rows={4}
+          placeholder="What did you see, eat or love about it?"
           onChange={(e) => setNotes(e.target.value)}
           value={notes}
         />
