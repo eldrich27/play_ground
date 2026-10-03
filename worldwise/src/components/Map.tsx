@@ -7,7 +7,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import style from "./Map.module.css"
 import { Button } from "./Button"
-import { useGeolocation } from "../hooks/useGeolocation"
+import { useGeolocation } from "../hooks/useGeoLocation"
 
 const DEFAULT_CENTER: [number, number] = [51.505, -0.09];
 
