@@ -4,6 +4,7 @@ import styles from "./Form.module.css";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
 import { useUrlLocation } from "../hooks/useUrlLocation";
+import Message from "./Message";
 
 
 const Base_Url = "https://api.bigdatacloud.net/data/reverse-geocode-client?"
@@ -14,6 +15,7 @@ function Form() {
   const [date, setDate] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [emoji, setEmoji] = useState<string>("");
+  const [geocodingError, setGeocodingError] = useState<string>("");
   const { lat, lng } = useUrlLocation();
 
   const navigate = useNavigate();
@@ -21,18 +23,34 @@ function Form() {
   useEffect(() => {
     const fetchCityData = async () => {
       try {
+        setGeocodingError("");
         const response = await fetch(`${Base_Url}latitude=${lat}&longitude=${lng}`);
+        if (!response.ok) {
+          throw new Error("Could not fetch data for this location.");
+        }
         const data = await response.json();
-        console.log(data);
-        setCityName(data.city);
+
+        const city = data.city || data.locality;
+        if (!city || !data.countryName || !data.countryCode) {
+          throw new Error("That doesn't seem to be a city. Click somewhere else 😉");
+        }
+        setCityName(city);
         setCountry(data.countryName);
+        setEmoji(data.countryCode);
       } catch (error) {
         console.error("Error fetching city data:", error);
+        setGeocodingError(
+          error instanceof Error
+            ? error.message
+            : "Something went wrong while fetching city data."
+        );
       }
     };
 
     fetchCityData();
   },[lat, lng]);
+
+  if (geocodingError) return <Message message={geocodingError} />;
 
   return (
     <form className={styles.form}>
