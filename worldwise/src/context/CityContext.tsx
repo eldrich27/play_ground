@@ -10,7 +10,8 @@ interface CityContextValues {
 
 const CityContext = createContext<CityContextValues | undefined>(undefined)
 
-const citiesUrl = import.meta.env.VITE_CITIES_URL
+// Set in .env; falls back to the local json-server (npm run server)
+const citiesUrl: string = import.meta.env.VITE_CITIES_URL ?? "http://localhost:3031/cities"
 
 export function CitiesProvider({ children }: { children: ReactNode }) {
   const [cities, setCities] = useState<Cities[]>([])
@@ -23,11 +24,15 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
       setIsLoading(true)
 
       try {
-        const resp = await fetch("http://localhost:3031/cities", {
+        const resp = await fetch(citiesUrl, {
           signal: controller.signal,
         })
 
-        const data = await resp.json()
+        if (!resp.ok) {
+          throw new Error("Could not load your cities.")
+        }
+
+        const data: Cities[] = await resp.json()
         setCities(data)
       } catch (err) {
         if (err instanceof Error && err.name !== "AbortError") {
@@ -45,7 +50,7 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
 
   // json-server assigns the id; errors are left for the caller to show
   async function addCity(newCity: Omit<Cities, "id">) {
-    const resp = await fetch("http://localhost:3031/cities", {
+    const resp = await fetch(citiesUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
