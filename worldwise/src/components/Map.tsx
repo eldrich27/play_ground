@@ -7,13 +7,16 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import style from "./Map.module.css"
 import { Button } from "./Button"
-import { useGeolocation } from "../hooks/useGeoLocation"
+import { useGeolocation } from "../hooks/useGeolocation"
+import { useCities } from "../context/CityContext"
+import { convertToEmoji } from "../utils/convertToEmoji"
 
-const DEFAULT_CENTER: [number, number] = [51.505, -0.09];
+const DEFAULT_CENTER: [number, number] = [28.6, 77.22];
 
 
 export default function Map(){
-    
+    const { cities } = useCities();
+
     const [searchParams] = useSearchParams();
     const lat = searchParams.get("lat");
     const lng = searchParams.get("lng");
@@ -53,18 +56,31 @@ export default function Map(){
             <MapContainer
                 className={style.map}
                 center={mapCenter}
-                zoom={18}
+                zoom={7}
                 scrollWheelZoom={true}
             >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                 />
-                <Marker position={mapCenter}>
-                    <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
+                {cities.map((city) => (
+                    <Marker
+                        key={city.id}
+                        position={[city.position.lat, city.position.lng]}
+                    >
+                        {/* Map.module.css styles the first span as the flag */}
+                        <Popup>
+                            <span>{convertToEmoji(city.emoji)}</span>
+                            <span>{city.cityName}</span>
+                        </Popup>
+                    </Marker>
+                ))}
+
+                {geoPosition && (
+                    <Marker position={[geoPosition.lat, geoPosition.lng]}>
+                        <Popup>📍 Your current location</Popup>
+                    </Marker>
+                )}
                 <ChangeMapCenter position={mapCenter} />
                 <MapClickHandler />
             </MapContainer>

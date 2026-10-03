@@ -46,6 +46,8 @@ export function useGeolocation() {
       // Success callback — position comes wrapped in a GeolocationPosition object
       (pos) => {
         if (!isMounted.current) return;
+        // accuracy is in metres — thousands of metres means the browser guessed from your IP, not Wi-Fi/GPS
+        console.log(`Location accuracy: ${Math.round(pos.coords.accuracy)} m`);
         setState({
           position: {
             lat: pos.coords.latitude,
@@ -64,6 +66,12 @@ export function useGeolocation() {
           error: err.message,
           isLoading: false,
         });
+      },
+
+      {
+        enableHighAccuracy: true, // prefer Wi-Fi/GPS over a rough IP-based guess
+        maximumAge: 0,            // don't reuse a cached (possibly old) position
+        timeout: 10000,           // give up after 10s instead of waiting forever
       }
     );
   }
