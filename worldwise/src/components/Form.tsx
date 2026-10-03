@@ -7,6 +7,8 @@ import { useUrlLocation } from "../hooks/useUrlLocation";
 import Message from "./Message";
 import Spinner from "./Spinner";
 import { convertToEmoji, convertToEmoji2 } from "../utils/convertToEmoji";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const Base_Url = "https://api.bigdatacloud.net/data/reverse-geocode-client?"
@@ -14,7 +16,7 @@ const Base_Url = "https://api.bigdatacloud.net/data/reverse-geocode-client?"
 function Form() {
   const [cityName, setCityName] = useState<string>("");
   const [country, setCountry] = useState<string>("");
-  const [date, setDate] = useState<string>("");
+  const [date, setDate] = useState<Date | null>(null);
   const [notes, setNotes] = useState<string>("");
   const [emoji, setEmoji] = useState<string>("");
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState<boolean>(false);
@@ -41,6 +43,7 @@ function Form() {
         setCityName(city);
         setCountry(data.countryName);
         setEmoji(convertToEmoji2(data.countryCode));
+        setDate(new Date());
       } catch (error) {
         console.error("Error fetching city data:", error);
         setGeocodingError(
@@ -79,13 +82,23 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
+        {/* <input
           id="date"
           type="date"
           onChange={(e) => setDate(e.target.value)}
           value={date}
+        /> */}
+        <DatePicker
+          id="date"
+          selected={date}
+          onChange={(date: Date | null) => setDate(date)}
+          dateFormat="dd/MM/yyyy"
+          showIcon
+          toggleCalendarOnIconClick
+          calendarIconClassName={styles.calendarIcon}
         />
       </div>
+      
 
       <div className={styles.row}>
         <label htmlFor="notes">Notes about your trip to {cityName}</label>
