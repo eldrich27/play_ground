@@ -6,12 +6,12 @@ interface CityContextValues {
   cities: Cities[]
   isLoading: boolean
   addCity: (newCity: Omit<Cities, "id">) => Promise<void>
+  deleteCity: (id: Cities["id"]) => Promise<void>
 }
 
 const CityContext = createContext<CityContextValues | undefined>(undefined)
 
-// Set in .env; falls back to the local json-server (npm run server)
-const citiesUrl: string = import.meta.env.VITE_CITIES_URL ?? "http://localhost:3031/cities"
+const citiesUrl = import.meta.env.VITE_CITIES_URL
 
 export function CitiesProvider({ children }: { children: ReactNode }) {
   const [cities, setCities] = useState<Cities[]>([])
@@ -28,11 +28,7 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
           signal: controller.signal,
         })
 
-        if (!resp.ok) {
-          throw new Error("Could not load your cities.")
-        }
-
-        const data: Cities[] = await resp.json()
+        const data = await resp.json()
         setCities(data)
       } catch (err) {
         if (err instanceof Error && err.name !== "AbortError") {
@@ -46,9 +42,8 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
     fetchCities()
 
     return () => controller.abort()
-  }, []);
+  }, [])
 
-  // json-server assigns the id; errors are left for the caller to show
   async function addCity(newCity: Omit<Cities, "id">) {
     const resp = await fetch(citiesUrl, {
       method: "POST",
@@ -66,12 +61,30 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
     setCities((prev) => [...prev, data])
   }
 
+  async function deleteCity(id: Cities["id"]) {
+    const resp = await fetch(`${citiesUrl}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+
+    if (!resp.ok) {
+      throw new Error("Could not delete the city. Please try again.")
+    }
+
+    setCities((prev) => prev.filter((city) => city.id !== id))
+  }
+
   return (
-    <CityContext.Provider value={{ 
-      cities,
-      addCity, 
-      isLoading 
-    }}>
+    <CityContext.Provider
+      value={{
+        cities,
+        addCity,
+        deleteCity,
+        isLoading,
+      }}
+    >
       {children}
     </CityContext.Provider>
   )
