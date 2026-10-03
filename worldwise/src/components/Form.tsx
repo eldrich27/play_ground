@@ -23,6 +23,7 @@ function Form() {
       try {
         const response = await fetch(`${Base_Url}latitude=${lat}&longitude=${lng}`);
         const data = await response.json();
+        console.log(data);
         setCityName(data.city);
         setCountry(data.countryName);
       } catch (error) {
@@ -42,7 +43,7 @@ function Form() {
           onChange={(e) => setCityName(e.target.value)}
           value={cityName}
         />
-        {/* <span className={styles.flag}>{emoji}</span> */}
+        <span className={styles.flag}>{emoji}</span>
       </div>
 
       <div className={styles.row}>
