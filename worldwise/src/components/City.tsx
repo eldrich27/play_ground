@@ -1,17 +1,18 @@
 import style from "./City.module.css"
 
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useCities } from "../context/CityContext"
 import { formatDate } from "../utils/formatDate"
 import { convertToEmoji } from "../utils/convertToEmoji"
 import Spinner from "./Spinner"
 import Message from "./Message"
+import { Button } from "./Button"
 
 
 export function City(){
     const { id } = useParams<{ id: string }>()
     const { cities, isLoading } = useCities()
-
+    const navigate = useNavigate()
     if (isLoading) return <Spinner />
 
     // id from the URL is a string, while the ids in the data are numbers
@@ -41,6 +42,7 @@ export function City(){
                     <p>{notes}</p>
                 </div>
             )}
+            <Button type="back" onClick={()=>{navigate("/app/cities")}} >&larr; Back to all cities</Button>
         </div>
     )
 }
