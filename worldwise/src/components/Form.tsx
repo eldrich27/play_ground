@@ -82,12 +82,6 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        {/* <input
-          id="date"
-          type="date"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
-        /> */}
         <DatePicker
           id="date"
           selected={date}
