@@ -52,3 +52,26 @@
   background-color: var(--color-brand--1);
   color: var(--color-dark--1);
 }
+
+/* While deleting: fade the item and block clicks until it's removed */
+.cityItem.deleting {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.deleteSpinner {
+  flex-shrink: 0;
+  height: 2rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, var(--color-light--2));
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 3px), #000 0);
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 3px), #000 0);
+  animation: rotate 1s infinite linear;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
