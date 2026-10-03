@@ -9,10 +9,11 @@ export function Button({onClick, type, children}: PropsWithChildren<{
     return(
         <button 
             className={`${style.btn} ${style[type]}`}
-            onClick={(e)=>{
+            // Without an onClick the button falls back to submitting its form
+            onClick={onClick ? (e)=>{
                 e.preventDefault();
-                onClick && onClick()
-            }}
+                onClick()
+            } : undefined}
         >
             {children}
         </button>

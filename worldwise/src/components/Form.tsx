@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 
 import styles from "./Form.module.css";
 import { Button } from "./Button";
@@ -9,6 +9,7 @@ import Spinner from "./Spinner";
 import { convertToEmoji, convertToEmoji2 } from "../utils/convertToEmoji";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {useCities} from "../context/CityContext";
 
 
 const Base_Url = "https://api.bigdatacloud.net/data/reverse-geocode-client?"
@@ -21,7 +22,10 @@ function Form() {
   const [emoji, setEmoji] = useState<string>("");
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState<boolean>(false);
   const [geocodingError, setGeocodingError] = useState<string>("");
+  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [addError, setAddError] = useState<string>("");
   const { lat, lng } = useUrlLocation();
+  const { addCity } = useCities();
 
   const navigate = useNavigate();
 
@@ -59,6 +63,36 @@ function Form() {
     fetchCityData();
   },[lat, lng]);
 
+  //handle form submission
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!cityName.trim() || !date || !lat || !lng) {
+      setAddError("Please enter a city name and a date.");
+      return;
+    }
+
+    try {
+      setIsAdding(true);
+      setAddError("");
+      await addCity({
+        cityName: cityName.trim(),
+        country,
+        emoji,
+        date: date.toISOString(),
+        notes: notes.trim(),
+        position: { lat: Number(lat), lng: Number(lng) },
+      });
+      navigate("/app/cities");
+    } catch (error) {
+      setAddError(
+        error instanceof Error ? error.message : "Could not add the city."
+      );
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
   // Conditional rendering based on the state of geocoding
   if (isLoadingGeocoding) return <Spinner />;
 
@@ -69,7 +103,10 @@ function Form() {
   if (!lat || !lng) return <Message message="Start by clicking somewhere on the map 🌍" />;
 
   return (
-    <form className={styles.form}>
+    <form
+      className={`${styles.form} ${isAdding ? styles.loading : ""}`}
+      onSubmit={handleSubmit}
+    >
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
@@ -105,8 +142,10 @@ function Form() {
         />
       </div>
 
+      {addError && <p className={styles.error}>{addError}</p>}
+
       <div className={styles.buttons}>
-        <Button type="primary" >Add</Button>
+        <Button type="primary">{isAdding ? "Adding..." : "Add"}</Button>
         <Button type="back" onClick={() => navigate("/app/cities")}>&larr; Back</Button>
       </div>
     </form>

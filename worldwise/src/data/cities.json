@@ -43,10 +43,34 @@
       "date": "2027-02-12T09:24:11.863Z",
       "notes": "",
       "position": {
-        "lat": 40.730610,
+        "lat": 40.73061,
         "lng": -73.935242
       },
       "id": 12345678
+    },
+    {
+      "cityName": "Udupi",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2026-10-03T14:16:24.130Z",
+      "notes": "Awesome Experience! I will definitely visit this place again!😊",
+      "position": {
+        "lat": 13.290950699789741,
+        "lng": 74.81538264929351
+      },
+      "id": 98443198
+    },
+    {
+      "cityName": "Ullal",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2026-09-27T14:20:29.000Z",
+      "notes": "Awesome Experience! I will definitely visit this place again!😊",
+      "position": {
+        "lat": 12.830509425131353,
+        "lng": 74.89222518957922
+      },
+      "id": 98443199
     }
   ]
 }
