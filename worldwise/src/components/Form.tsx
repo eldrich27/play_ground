@@ -30,11 +30,16 @@ function Form() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Nothing to look up until a spot on the map has been clicked
+    if (!lat || !lng) return;
+
     const fetchCityData = async () => {
       try {
         setIsLoadingGeocoding(true);
         setGeocodingError("");
-        const response = await fetch(`${BaseGeoUrl}latitude=${lat}&longitude=${lng}`);
+        // Build the query with URLSearchParams so the base URL doesn't need a trailing "?"
+        const params = new URLSearchParams({ latitude: lat, longitude: lng });
+        const response = await fetch(`${BaseGeoUrl}?${params}`);
         if (!response.ok) {
           throw new Error("Could not fetch data for this location.");
         }

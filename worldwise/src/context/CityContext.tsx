@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext, type ReactNode } from "react"
+import { useReducer, useEffect, createContext, useContext, type ReactNode } from "react"
 
 import type { Cities } from "../types/Cities"
 
@@ -13,29 +13,65 @@ const CityContext = createContext<CityContextValues | undefined>(undefined)
 
 const citiesUrl = import.meta.env.VITE_CITIES_URL
 
+interface CitiesState {
+  cities: Cities[]
+  isLoading: boolean
+}
+
+type CitiesAction =
+  | { type: "loading" }
+  | { type: "cities/loaded"; payload: Cities[] }
+  | { type: "city/created"; payload: Cities }
+  | { type: "city/deleted"; payload: Cities["id"] }
+  | { type: "loading/finished" }
+
+const initialState: CitiesState = {
+  cities: [],
+  isLoading: false,
+}
+
+function reducer(state: CitiesState, action: CitiesAction): CitiesState {
+  switch (action.type) {
+    case "loading":
+      return { ...state, isLoading: true }
+    case "cities/loaded":
+      return { ...state, isLoading: false, cities: action.payload }
+    case "city/created":
+      return { ...state, cities: [...state.cities, action.payload] }
+    case "city/deleted":
+      return {
+        ...state,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+      }
+    case "loading/finished":
+      return { ...state, isLoading: false }
+    default:
+      return state
+  }
+}
+
 export function CitiesProvider({ children }: { children: ReactNode }) {
-  const [cities, setCities] = useState<Cities[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [{ cities, isLoading }, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
     const controller = new AbortController()
 
     async function fetchCities() {
-      setIsLoading(true)
+      dispatch({ type: "loading" })
 
       try {
         const resp = await fetch(citiesUrl, {
           signal: controller.signal,
         })
 
-        const data = await resp.json()
-        setCities(data)
+        const data: Cities[] = await resp.json()
+        dispatch({ type: "cities/loaded", payload: data })
       } catch (err) {
-        if (err instanceof Error && err.name !== "AbortError") {
-          console.error(err)
-        }
-      } finally {
-        setIsLoading(false)
+        // An aborted request is replaced by the next one, so leave isLoading alone
+        if (err instanceof Error && err.name === "AbortError") return
+
+        console.error(err)
+        dispatch({ type: "loading/finished" })
       }
     }
 
@@ -58,7 +94,7 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
     }
 
     const data: Cities = await resp.json()
-    setCities((prev) => [...prev, data])
+    dispatch({ type: "city/created", payload: data })
   }
 
   async function deleteCity(id: Cities["id"]) {
@@ -73,7 +109,7 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
       throw new Error("Could not delete the city. Please try again.")
     }
 
-    setCities((prev) => prev.filter((city) => city.id !== id))
+    dispatch({ type: "city/deleted", payload: id })
   }
 
   return (
