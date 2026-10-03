@@ -12,7 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {useCities} from "../context/CityContext";
 
 
-const Base_Url = "https://api.bigdatacloud.net/data/reverse-geocode-client?"
+const BaseGeoUrl = import.meta.env.VITE_GEOLOCATION_URL;
 
 function Form() {
   const [cityName, setCityName] = useState<string>("");
@@ -34,7 +34,7 @@ function Form() {
       try {
         setIsLoadingGeocoding(true);
         setGeocodingError("");
-        const response = await fetch(`${Base_Url}latitude=${lat}&longitude=${lng}`);
+        const response = await fetch(`${BaseGeoUrl}latitude=${lat}&longitude=${lng}`);
         if (!response.ok) {
           throw new Error("Could not fetch data for this location.");
         }
