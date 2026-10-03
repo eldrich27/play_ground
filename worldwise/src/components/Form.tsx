@@ -100,7 +100,7 @@ function Form() {
 
       <div className={styles.buttons}>
         <Button type="primary" >Add</Button>
-        <Button type="back" onClick={() => navigate(-1)}>&larr; Back</Button>
+        <Button type="back" onClick={() => navigate("/app/cities")}>&larr; Back</Button>
       </div>
     </form>
   );
