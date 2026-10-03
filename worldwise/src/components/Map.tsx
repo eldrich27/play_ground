@@ -10,6 +10,7 @@ import { Button } from "./Button"
 import { useGeolocation } from "../hooks/useGeolocation"
 import { useCities } from "../context/CityContext"
 import { convertToEmoji } from "../utils/convertToEmoji"
+import { useUrlLocation } from "../hooks/useUrlLocation"
 
 const DEFAULT_CENTER: [number, number] = [28.6, 77.22];
 
@@ -17,9 +18,7 @@ const DEFAULT_CENTER: [number, number] = [28.6, 77.22];
 export default function Map(){
     const { cities } = useCities();
 
-    const [searchParams] = useSearchParams();
-    const lat = searchParams.get("lat");
-    const lng = searchParams.get("lng");
+    const { lat, lng } = useUrlLocation();
 
     // Remember the last selected city so the map stays there when the URL no longer has lat/lng
     const [mapCenter, setMapCenter] = useState<[number, number]>(() =>
