@@ -10,6 +10,8 @@ interface CityContextValues {
 
 const CityContext = createContext<CityContextValues | undefined>(undefined)
 
+const citiesUrl = import.meta.env.VITE_CITIES_URL
+
 export function CitiesProvider({ children }: { children: ReactNode }) {
   const [cities, setCities] = useState<Cities[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
