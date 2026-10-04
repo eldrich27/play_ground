@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
 import {useAuth} from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, type Location } from "react-router-dom";
 
 
 
@@ -15,6 +15,10 @@ export default function Login() {
 
   const {login, isAuthenticated} = useAuth()
   const navigate = useNavigate();
+  // Set by ProtectedRoutes when it redirected here from a protected page
+  const location = useLocation();
+  const from = (location.state as { from?: Location } | null)?.from;
+  const redirectTo = from ? `${from.pathname}${from.search}` : "/app";
   const [error, setError] = useState("");
 
   function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -32,9 +36,9 @@ export default function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/app", { replace: true });
+      navigate(redirectTo, { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, redirectTo]);
 
   return (
     <main className={styles.login}>

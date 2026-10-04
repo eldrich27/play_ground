@@ -59,6 +59,18 @@
         "lng": 74.67119075032936
       },
       "id": 98443198
+    },
+    {
+      "cityName": "Nashik",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2026-02-17T07:24:23.000Z",
+      "notes": "Good city, not something I enjoyed, I need to make better itinerary if I am going to visit this place in future.🤣",
+      "position": {
+        "lat": 20.012481280520284,
+        "lng": 73.78623904043795
+      },
+      "id": 98443199
     }
   ]
 }
