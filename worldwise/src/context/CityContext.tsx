@@ -1,10 +1,12 @@
-import { useReducer, useEffect, createContext, useContext, type ReactNode } from "react"
+import { useReducer, useEffect, useCallback, createContext, useContext, type ReactNode } from "react"
 
 import type { Cities } from "../types/Cities"
 
 interface CityContextValues {
   cities: Cities[]
   isLoading: boolean
+  currentCity: Cities | null
+  getCity: (id: Cities["id"], signal?: AbortSignal) => Promise<void>
   addCity: (newCity: Omit<Cities, "id">) => Promise<void>
   deleteCity: (id: Cities["id"]) => Promise<void>
 }
@@ -16,11 +18,13 @@ const citiesUrl = import.meta.env.VITE_CITIES_URL
 interface CitiesState {
   cities: Cities[]
   isLoading: boolean
+  currentCity: Cities | null
 }
 
 type CitiesAction =
   | { type: "loading" }
   | { type: "cities/loaded"; payload: Cities[] }
+  | { type: "city/loaded"; payload: Cities }
   | { type: "city/created"; payload: Cities }
   | { type: "city/deleted"; payload: Cities["id"] }
   | { type: "loading/finished" }
@@ -28,6 +32,7 @@ type CitiesAction =
 const initialState: CitiesState = {
   cities: [],
   isLoading: false,
+  currentCity: null,
 }
 
 function reducer(state: CitiesState, action: CitiesAction): CitiesState {
@@ -36,12 +41,15 @@ function reducer(state: CitiesState, action: CitiesAction): CitiesState {
       return { ...state, isLoading: true }
     case "cities/loaded":
       return { ...state, isLoading: false, cities: action.payload }
+    case "city/loaded":
+      return { ...state, isLoading: false, currentCity: action.payload }
     case "city/created":
       return { ...state, cities: [...state.cities, action.payload] }
     case "city/deleted":
       return {
         ...state,
         cities: state.cities.filter((city) => city.id !== action.payload),
+        currentCity: state.currentCity?.id === action.payload ? null : state.currentCity,
       }
     case "loading/finished":
       return { ...state, isLoading: false }
@@ -51,7 +59,7 @@ function reducer(state: CitiesState, action: CitiesAction): CitiesState {
 }
 
 export function CitiesProvider({ children }: { children: ReactNode }) {
-  const [{ cities, isLoading }, dispatch] = useReducer(reducer, initialState)
+  const [{ cities, isLoading, currentCity }, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -78,6 +86,30 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
     fetchCities()
 
     return () => controller.abort()
+  }, [])
+
+  // useCallback keeps the same function between renders, so components can list it
+  // in a useEffect dependency array without the effect re-running on every render.
+  // dispatch and citiesUrl never change, so there are no dependencies.
+  const getCity = useCallback(async (id: Cities["id"], signal?: AbortSignal) => {
+    dispatch({ type: "loading" })
+
+    try {
+      const resp = await fetch(`${citiesUrl}/${id}`, { signal })
+
+      if (!resp.ok) {
+        throw new Error("Could not fetch the city. Please try again.")
+      }
+
+      const data: Cities = await resp.json()
+      dispatch({ type: "city/loaded", payload: data })
+    } catch (err) {
+      // A newer request replaced this one, so it owns the loading state now
+      if (err instanceof Error && err.name === "AbortError") return
+
+      dispatch({ type: "loading/finished" })
+      throw err
+    }
   }, [])
 
   async function addCity(newCity: Omit<Cities, "id">) {
@@ -116,6 +148,8 @@ export function CitiesProvider({ children }: { children: ReactNode }) {
     <CityContext.Provider
       value={{
         cities,
+        currentCity,
+        getCity,
         addCity,
         deleteCity,
         isLoading,
