@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
+import SpinnerFullPage from "../components/SpinnerFullPage";
 import {useAuth} from "../context/AuthContext";
 import { useLocation, useNavigate, type Location } from "react-router-dom";
 
@@ -39,6 +40,11 @@ export default function Login() {
       navigate(redirectTo, { replace: true });
     }
   }, [isAuthenticated, navigate, redirectTo]);
+
+  // Once logged in, swap the form for a spinner while the effect above redirects.
+  // Otherwise the login page (with the nav already showing the avatar and Logout)
+  // stays visible until the app has loaded.
+  if (isAuthenticated) return <SpinnerFullPage />;
 
   return (
     <main className={styles.login}>
