@@ -3,11 +3,31 @@ import { Link } from "react-router-dom";
 
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
+import {useAuth} from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
+
+
 
 export default function Login() {
   // PRE-FILL FOR DEV PURPOSES
   const [email, setEmail] = useState("jack@example.com");
   const [password, setPassword] = useState("qwerty");
+
+  const {login} = useAuth()
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  function handleClick() {
+    setError("");
+
+    try {
+      login(email, password);
+      navigate("/app", {replace: true});
+    } catch {
+      setError("Authentication failed");
+    }
+  }
 
   return (
     <main className={styles.login}>
@@ -36,9 +56,12 @@ export default function Login() {
         </div>
 
         <div>
-          <Link to="/app"><button className={styles.button}>Login</button></Link>
+          <Link to="/app"><button className={styles.button} onClick={handleClick}>
+            Login
+          </button></Link>
         </div>
       </form>
+      {error && <p role="alert">{error}</p>}
     </main>
   );
 }

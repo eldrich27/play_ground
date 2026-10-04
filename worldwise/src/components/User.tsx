@@ -1,18 +1,34 @@
 import styles from "./User.module.css";
 import type { User } from "../types/User";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const FAKE_USER:User = JSON.parse(import.meta.env.VITE_FAKE_USER)
+const FAKE_USER: User = JSON.parse(import.meta.env.VITE_FAKE_USER);
 
 function User() {
   const user = FAKE_USER;
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
-  function handleClick() {}
+  async function handleClick() {
+    setError("");
+
+    try {
+      login(user.email, user.password);
+      navigate("/app");
+    } catch {
+      setError("Authentication failed");
+    }
+  }
 
   return (
     <div className={styles.user}>
       <img src={user.avatarUrl} alt={user.name} />
       <span>Welcome, {user.name}</span>
       <button onClick={handleClick}>Logout</button>
+      {error && <p role="alert">{error}</p>}
     </div>
   );
 }

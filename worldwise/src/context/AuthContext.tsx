@@ -11,7 +11,6 @@ interface AuthContextValues {
 type AuthAction =
   | { type: "LOGIN"; payload: User }
   | { type: "LOGOUT" }
-  | { type: "Error"; payload: string }
 
 interface AuthState {
   isAuthenticated: boolean
@@ -39,9 +38,6 @@ function reducer(state: AuthState, action: AuthAction): AuthState {
       return { ...state, isAuthenticated: true, user: action.payload }
     case "LOGOUT":
       return { ...state, isAuthenticated: false, user: null }
-    case "Error":
-      console.error(action.payload)
-      return state
     default:
       return state
   }
@@ -53,12 +49,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [{ user, isAuthenticated }, dispatch] = useReducer(reducer, initialState)
 
   const login = (email: string, password: string) => {
-    if (email === FAKE_USER.email && password === FAKE_USER.password) {
-      dispatch({ type: "LOGIN", payload: FAKE_USER })
-    } else {
-    //   throw new Error("Invalid email or password")
-      dispatch({ type: "Error", payload: "Invalid email or password" })
+    if (email !== FAKE_USER.email && password !== FAKE_USER.password) {
+      throw new Error("Invalid email or password")
     }
+    dispatch({ type: "LOGIN", payload: FAKE_USER })
   }
 
   const logout = () => {
