@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
@@ -13,7 +13,7 @@ export default function Login() {
   const [email, setEmail] = useState("jack@example.com");
   const [password, setPassword] = useState("qwerty");
 
-  const {login} = useAuth()
+  const {login, isAuthenticated} = useAuth()
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
@@ -22,12 +22,19 @@ export default function Login() {
     setError("");
 
     try {
-      login(email, password);
-      navigate("/app", {replace: true});
+      if (email.trim() && password.trim()) {
+        login(email, password); 
+      }
     } catch (err) {
       setError(err instanceof Error ?`Authentication failed : ${err.message}`  : "Authentication failed");
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <main className={styles.login}>
