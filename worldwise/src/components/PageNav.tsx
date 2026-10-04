@@ -21,10 +21,10 @@ function PageNav() {
 
       <ul>
         <li>
-          <NavLink to="/pricing">Pricing</NavLink>
+          <NavLink to="/pricing" className={styles.navLink}>Pricing</NavLink>
         </li>
         <li>
-          <NavLink to="/product">Product</NavLink>
+          <NavLink to="/product" className={styles.navLink}>Product</NavLink>
         </li>
         <li>
           {isAuthenticated && user ? (

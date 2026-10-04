@@ -20,9 +20,23 @@
   font-weight: 600;
 }
 
+/* Menu links (not the Login button or avatar) get a transparent line above and
+   below, so turning it green on the active link doesn't shift the layout */
+.navLink {
+  display: block;
+  padding: 0.4rem 0;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
 /* CSS Modules feature */
 .nav a:global(.active) {
   color: var(--color-brand--2);
+}
+
+.nav a.navLink:global(.active) {
+  border-color: var(--color-brand--2);
 }
 
 a.ctaLink:link,
