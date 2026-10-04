@@ -25,7 +25,7 @@ export default function Login() {
       login(email, password);
       navigate("/app", {replace: true});
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Authentication failed");
+      setError(err instanceof Error ?`Authentication failed : ${err.message}`  : "Authentication failed");
     }
   }
 
