@@ -55,17 +55,18 @@ export default function Login() {
           />
         </div>
 
-        {error && (
-          <p className={styles.error} role="alert">
-            {error}
-          </p>
-        )}
+        
 
         <div>
           <button className={styles.button} type="submit">
             Login
           </button>
         </div>
+        {error && (
+          <p className={styles.error} role="alert">
+            {error}
+          </p>
+        )}
       </form>
     </main>
   );
