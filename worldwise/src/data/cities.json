@@ -47,6 +47,18 @@
         "lng": -73.935242
       },
       "id": 12345678
+    },
+    {
+      "cityName": "Kodi",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2025-11-05T02:27:21.000Z",
+      "notes": "Great beach, great view, amazing place😍",
+      "position": {
+        "lat": 13.61924366169677,
+        "lng": 74.67119075032936
+      },
+      "id": 98443198
     }
   ]
 }
