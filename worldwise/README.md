@@ -1,4 +1,4 @@
-# <img src="public/worldwise.svg" alt="" width="32" /> WorldWise
+# <img src="public/icon.png" alt="" width="32" /> WorldWise
 
 <p>
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black" alt="React 19" />
