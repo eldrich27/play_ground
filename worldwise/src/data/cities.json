@@ -37,28 +37,40 @@
       "id": 98443197
     },
     {
-      "cityName": "Madrida",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
+      "cityName": "New York",
+      "country": "United States",
+      "emoji": "🇺🇸",
+      "date": "2027-02-12T09:24:11.863Z",
       "notes": "",
       "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
+        "lat": 40.73061,
+        "lng": -73.935242
       },
-      "id": 178067513
+      "id": 12345678
     },
     {
-      "cityName": "Berlina",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
+      "cityName": "Kodi",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2025-11-05T02:27:21.000Z",
+      "notes": "Great beach, great view, amazing place😍",
       "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
+        "lat": 13.61924366169677,
+        "lng": 74.67119075032936
       },
-      "id": 984431973
+      "id": 98443198
+    },
+    {
+      "cityName": "Nashik",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2026-02-17T07:24:23.000Z",
+      "notes": "Good city, not something I enjoyed, I need to make better itinerary if I am going to visit this place in future.🤣",
+      "position": {
+        "lat": 20.012481280520284,
+        "lng": 73.78623904043795
+      },
+      "id": 98443199
     }
   ]
 }

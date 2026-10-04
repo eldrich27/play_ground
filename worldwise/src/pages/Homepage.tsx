@@ -2,9 +2,19 @@ import styles from "./Homepage.module.css";
 import PageNav  from "../components/PageNav";
 import { Button } from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Homepage() {
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth();
+
+  function handleClick() {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } else {
+      navigate("/app");
+    }
+  }
   return (
     <main className={styles.homepage}>
       <PageNav />
@@ -19,7 +29,7 @@ export default function Homepage() {
           of. Never forget your wonderful experiences, and show your friends how
           you have wandered the world.
         </h2>
-        <Button type="primary" onClick={() => navigate("/app")}>
+        <Button type="primary" onClick={handleClick}>
           Start Adding Your Trips
         </Button>
       </section>

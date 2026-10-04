@@ -1,0 +1,55 @@
+.user {
+  position: absolute;
+  top: 4.2rem;
+  right: 4.2rem;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 0.8rem 0.8rem 0.8rem 1rem;
+
+  background-color: var(--color-dark--1);
+  border-left: 5px solid var(--color-brand--2);
+  border-radius: 7px;
+  box-shadow: 0 0.8rem 2.4rem rgba(36, 42, 46, 0.5);
+
+  color: var(--color-light--2);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.name {
+  white-space: nowrap;
+  color: var(--color-light--3);
+}
+
+.name strong {
+  font-weight: 700;
+  color: var(--color-light--2);
+}
+
+/* Same look as the app's Button: uppercase, 5px radius, inherited font */
+.logout {
+  padding: 0.6rem 1.2rem;
+  font-family: inherit;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-light--2);
+  background-color: var(--color-dark--2);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout:hover {
+  background-color: var(--color-brand--1);
+  color: var(--color-dark--1);
+}
+
+.logout:focus-visible {
+  outline: 2px solid var(--color-brand--2);
+  outline-offset: 2px;
+}
