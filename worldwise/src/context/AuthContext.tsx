@@ -22,13 +22,6 @@ const initialState: AuthState = {
   user: null,
 }
 
-// const FAKE_USER: User = {
-//   id: "user-1",
-//   name: "John Doe",
-//   email: "john.doe@example.com",
-//   password: "password123",
-//   avatarUrl: "https://i.pravatar.cc/100?u=zz",
-// }
 
 const FAKE_USER:User = JSON.parse(import.meta.env.VITE_FAKE_USER)
 
@@ -49,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [{ user, isAuthenticated }, dispatch] = useReducer(reducer, initialState)
 
   const login = (email: string, password: string) => {
-    if (email !== FAKE_USER.email && password !== FAKE_USER.password) {
+    if (email !== FAKE_USER.email || password !== FAKE_USER.password) {
       throw new Error("Invalid email or password")
     }
     dispatch({ type: "LOGIN", payload: FAKE_USER })

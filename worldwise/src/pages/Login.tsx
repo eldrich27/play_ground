@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
@@ -18,21 +17,22 @@ export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  function handleClick() {
+  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
     setError("");
 
     try {
       login(email, password);
       navigate("/app", {replace: true});
-    } catch {
-      setError("Authentication failed");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Authentication failed");
     }
   }
 
   return (
     <main className={styles.login}>
       <PageNav></PageNav>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <h2 className={styles.title}>Log in to WorldWise</h2>
 
         <div className={styles.row}>
@@ -55,13 +55,18 @@ export default function Login() {
           />
         </div>
 
+        {error && (
+          <p className={styles.error} role="alert">
+            {error}
+          </p>
+        )}
+
         <div>
-          <Link to="/app"><button className={styles.button} onClick={handleClick}>
+          <button className={styles.button} type="submit">
             Login
-          </button></Link>
+          </button>
         </div>
       </form>
-      {error && <p role="alert">{error}</p>}
     </main>
   );
 }
