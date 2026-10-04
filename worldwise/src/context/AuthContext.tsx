@@ -1,12 +1,5 @@
 import { useReducer, createContext, type ReactNode, useContext } from "react"
-
-interface User {
-  id: string
-  name: string,
-  email: string,
-  password: string,
-  avatarUrl: string
-}
+import type { User } from "../types/User"
 
 interface AuthContextValues {
   isAuthenticated: boolean
@@ -30,13 +23,15 @@ const initialState: AuthState = {
   user: null,
 }
 
-const FAKE_USER: User = {
-  id: "user-1",
-  name: "John Doe",
-  email: "john.doe@example.com",
-  password: "password123",
-  avatarUrl: "https://i.pravatar.cc/100?u=zz",
-}
+// const FAKE_USER: User = {
+//   id: "user-1",
+//   name: "John Doe",
+//   email: "john.doe@example.com",
+//   password: "password123",
+//   avatarUrl: "https://i.pravatar.cc/100?u=zz",
+// }
+
+const FAKE_USER:User = JSON.parse(import.meta.env.VITE_FAKE_USER)
 
 function reducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
