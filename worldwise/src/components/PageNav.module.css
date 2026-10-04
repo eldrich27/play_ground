@@ -32,3 +32,47 @@ a.ctaLink:visited {
   padding: 0.8rem 2rem;
   border-radius: 7px;
 }
+
+/* Avatar + logout share one pill-shaped outline so they read as a single control */
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+  background-color: var(--color-dark--1);
+  border: 2px solid var(--color-brand--2);
+  border-radius: 100px;
+}
+
+.avatarLink {
+  display: block;
+  border-radius: 50%;
+  transition: box-shadow 0.2s;
+}
+
+.avatarLink:hover,
+.avatarLink:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-brand--2);
+}
+
+.logout {
+  padding: 0.5rem 1.4rem;
+  font-family: inherit;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-light--2);
+  background: none;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout:hover,
+.logout:focus-visible {
+  outline: none;
+  background-color: var(--color-brand--2);
+  color: var(--color-dark--0);
+}

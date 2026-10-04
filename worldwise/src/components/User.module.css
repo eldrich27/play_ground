@@ -19,25 +19,6 @@
   font-weight: 600;
 }
 
-.avatar {
-  flex-shrink: 0;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--color-dark--2);
-}
-
-.initials {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-brand--2);
-  color: var(--color-dark--1);
-  font-size: 1.4rem;
-  font-weight: 800;
-}
-
 .name {
   white-space: nowrap;
   color: var(--color-light--3);

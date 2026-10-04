@@ -1,11 +1,17 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import styles from "./PageNav.module.css";
 import { useAuth } from "../context/AuthContext";
-import { Button } from "./Button";
+import Avatar from "./Avatar";
 
 function PageNav() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate("/", { replace: true });
+  }
 
   return (
     <nav className={styles.nav}>
@@ -21,33 +27,16 @@ function PageNav() {
           <NavLink to="/product">Product</NavLink>
         </li>
         <li>
-          {isAuthenticated ? (
-            <>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-              >
-                <circle
-                  cx="12"
-                  cy="8"
-                  r="4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-              </svg>
-              <Button type="primary" onClick={logout}>
+          {isAuthenticated && user ? (
+            <div className={styles.userMenu}>
+              {/* The avatar doubles as a shortcut back into the app */}
+              <Link to="/app" className={styles.avatarLink} title="Go to the app">
+                <Avatar name={user.name} src={user.avatarUrl} size={3.2} />
+              </Link>
+              <button className={styles.logout} onClick={handleLogout}>
                 Logout
-              </Button>
-            </>
+              </button>
+            </div>
           ) : (
             <NavLink to="/login" className={styles.ctaLink}>
               Login
