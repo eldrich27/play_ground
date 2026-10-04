@@ -1,4 +1,4 @@
-import { useReducer, createContext, type ReactNode } from "react"
+import { useReducer, createContext, type ReactNode, useContext } from "react"
 
 interface User {
   id: string
@@ -58,4 +58,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
+
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider")
+  }
+
+  return context
 }
