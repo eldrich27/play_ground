@@ -44,7 +44,12 @@ function reducer(state: CitiesState, action: CitiesAction): CitiesState {
     case "city/loaded":
       return { ...state, isLoading: false, currentCity: action.payload }
     case "city/created":
-      return { ...state, cities: [...state.cities, action.payload] }
+      // The new city becomes the active one, so it's highlighted in the list
+      return {
+        ...state,
+        cities: [...state.cities, action.payload],
+        currentCity: action.payload,
+      }
     case "city/deleted":
       return {
         ...state,

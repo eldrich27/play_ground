@@ -71,6 +71,18 @@
         "lng": 73.78623904043795
       },
       "id": 98443199
+    },
+    {
+      "cityName": "Ahmedabad",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2019-12-19T13:22:55.000Z",
+      "notes": "Worst city, No non-veg options available here. I would prefer not to visit this place in the future 😠",
+      "position": {
+        "lat": 22.968125390983015,
+        "lng": 72.57466753395107
+      },
+      "id": 98443200
     }
   ]
 }

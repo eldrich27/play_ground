@@ -13,8 +13,12 @@ interface CityItemProps{
 
 export function CityItem({city}:CityItemProps){
     const {lat, lng} = city.position
-    const { deleteCity } = useCities();
+    const { deleteCity, currentCity } = useCities();
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+    // currentCity is a single city in the context, so at most one item is ever active.
+    // It stays set after leaving the city view, so the last opened city stays highlighted.
+    const isActive = currentCity?.id === city.id;
 
     async function handleDelete(e: MouseEvent<HTMLButtonElement>) {
         // The button sits inside the Link, so stop the click from opening the city
@@ -35,7 +39,8 @@ export function CityItem({city}:CityItemProps){
     return(
         <li >
             <Link
-                className={`${style.cityItem} ${isDeleting ? style.deleting : ""}`}
+                className={`${style.cityItem} ${isActive ? style["cityItem--active"] : ""} ${isDeleting ? style.deleting : ""}`}
+                aria-current={isActive ? "true" : undefined}
                 aria-busy={isDeleting}
                 to={`${city.id}?lat=${lat}&lng=${lng}`}
             >

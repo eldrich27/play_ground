@@ -8,6 +8,8 @@
   background-color: var(--color-dark--2);
   border-radius: 7px;
   padding: 1rem 2rem;
+  /* Transparent border so the active item's outline doesn't shift the layout */
+  border: 2px solid transparent;
   border-left: 5px solid var(--color-brand--2);
   cursor: pointer;
 
@@ -15,9 +17,9 @@
   text-decoration: none;
 }
 
-.cityItem--active {
-  border: 2px solid var(--color-brand--2);
-  border-left: 5px solid var(--color-brand--2);
+/* Chained with .cityItem so it beats the .cityItem:link rule above */
+.cityItem.cityItem--active {
+  border-color: var(--color-brand--2);
 }
 
 .emoji {
