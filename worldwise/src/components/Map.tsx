@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { useSearchParams, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useMap, useMapEvents } from "react-leaflet"
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 
